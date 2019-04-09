@@ -210,7 +210,159 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      
+      <h2 id="Centos-服务器安装-Laravel-Kafka"><a href="#Centos-服务器安装-Laravel-Kafka" class="headerlink" title="Centos 服务器安装 Laravel Kafka"></a>Centos 服务器安装 Laravel Kafka</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h4><p>按照文档的顺序安装。</p>
+<h6 id="java"><a href="#java" class="headerlink" title="java"></a>java</h6><pre><code>// yum 搜索 java
+yum search java
+yum install java-1.8.0-openjdk-devel.x86_64
+</code></pre><h6 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h6><pre><code>// 下载
+cd /usr/local/
+wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz
+// 得到 zookeeper-3.4.14
+tar -zvxf zookeeper-3.4.14.tar.gz
+// 将zookeeper后缀 移除
+mv /usr/local/zookeeper-3.4.14 /usr/local/zookeeper
+// 添加全局命令
+vim /etc/profile
+// profile文件尾部添加:
+文件尾部添加：export ZOOKEEPER_HOME=/usr/local/zookeeper/
+文件尾部添加：export PATH=$ZOOKEEPER_HOME/bin:$PATH
+文件尾部添加：export PATH
+// 发布刚刚修改的profile命令
+source /etc/profile
+// zookeeper 默认无配置文件，需要生成一个配置文件
+cd /usr/local/zookeeper/conf
+cp zoo_sample.cfg zoo.cfg
+vim zoo.cfg
+// 更改zoo.cfg配置文件中的dataDir (默认放至 /tmp/data) 以及dataLogDir (默认至 /tmp/data-log)
+dataDir修改为： dataDir=/usr/local/zookeeper/data // 可先在目录下创建文件
+dataLogDir修改为：dataLogDir=/usr/local/zookeeper/logs // 可先在目录下创建文件
+// 运行命令
+zkServer.sh start
+// 查看zookeeper是否启动成功
+// 若启动失败，修复文档：https://blog.csdn.net/cc1949/article/details/78196226
+// 出错基本都是没有日志生成权限
+zkServer.sh status
+</code></pre><p>安装完成！</p>
+<h6 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h6><pre><code>// 下载
+cd /usr/local/
+wget http://mirrors.shu.edu.cn/apache/kafka/2.1.1/kafka_2.11-2.1.1.tgz
+tar -zvxf kafka_2.11-2.1.1.tgz
+// 删除文件包
+rm -rf kafka_2.11-2.1.1.tgz
+mv /usr/local/kafka_2.11-2.1.1 /usr/local/kafka
+cd kafka/config
+// 更改kafka的服务器配置文件
+log.dirs更改为：/usr/local/kafka/kafka-logs  // 放在kafka文件下
+num.partitions更改为：4  // 这里随便给的
+</code></pre><p>安装完成！<br>    当前为1台broker的形式，多台需要简单配置一下！</p>
+<h6 id="librdkafka"><a href="#librdkafka" class="headerlink" title="librdkafka"></a>librdkafka</h6><p>librdkafka为kafka扩展</p>
+<pre><code>cd /usr/local/
+mkdir librdkafka
+git clone https://github.com/edenhill/librdkafka.git
+./configure
+make
+make install
+</code></pre><h6 id="php-kafka"><a href="#php-kafka" class="headerlink" title="php-kafka"></a>php-kafka</h6><pre><code>pecl install rdkafka
+</code></pre><p>检测是否安装成功</p>
+<pre><code>php -i | grep rdkafka
+</code></pre><p>安装文档地址：<a href="https://packagist.org/packages/rapide/laravel-queue-kafka" target="_blank" rel="noopener">https://packagist.org/packages/rapide/laravel-queue-kafka</a></p>
+<h6 id="laravel-安装-kafka-扩展"><a href="#laravel-安装-kafka-扩展" class="headerlink" title="laravel 安装 kafka 扩展"></a>laravel 安装 kafka 扩展</h6><pre><code>composer require rapide/laravel-queue-kafka
+</code></pre><p>配置使用地址：<a href="https://packagist.org/packages/rapide/laravel-queue-kafka" target="_blank" rel="noopener">https://packagist.org/packages/rapide/laravel-queue-kafka</a></p>
+<h2 id="laravel-kafka-运行"><a href="#laravel-kafka-运行" class="headerlink" title="laravel-kafka 运行"></a>laravel-kafka 运行</h2><h4 id="开启kafka"><a href="#开启kafka" class="headerlink" title="开启kafka"></a>开启kafka</h4><pre><code>cd /usr/local/kafka
+bin/kafka-server-start.sh config/server.properties
+</code></pre><p>kafka开启多个服务器（broker-0.properties为copy server.properties），修改broker id生成的</p>
+<pre><code>bin/kafka-server-start.sh config/broker0.properties
+bin/kafka-server-start.sh config/broker1.properties
+</code></pre><h6 id="kafka配置本地broker注意事项"><a href="#kafka配置本地broker注意事项" class="headerlink" title="kafka配置本地broker注意事项"></a>kafka配置本地broker注意事项</h6><pre><code>1.若添加多个broker需将/usr/local/celler/kafka/2.1.0/libexec/config/server.properties
+2. 修改端口
+3. 修改文件所在地址 /usr/local/var/lib/kafka-logs/meta.properties broker_id 设置成对应的id,然后启动服务
+4. 复制 {KAFKA_PATH}/config/server.properties，需要模拟几台机器就复制几份
+5. broker.id (文件开头) 必须唯一
+6. listeners=PLAINTEXT://:9092 每一个文件的端口号必须唯一
+7. log.dirs 文件可指定，指定路径为绝对路径
+</code></pre><p>配置文档教程地址：<a href="https://blog.csdn.net/camel84/article/details/81879118" target="_blank" rel="noopener">https://blog.csdn.net/camel84/article/details/81879118</a></p>
+<h6 id="查看所有topic列表"><a href="#查看所有topic列表" class="headerlink" title="查看所有topic列表"></a>查看所有topic列表</h6><p>bin/kafka-topics.sh –zookeeper localhost:2181 –list</p>
+<h6 id="查看指定topic明细"><a href="#查看指定topic明细" class="headerlink" title="查看指定topic明细"></a>查看指定topic明细</h6><p>bin/kafka-topic.sh –zookeeper localhost:2181 –describe –topic {topic-name}</p>
+<h6 id="新建一个topic"><a href="#新建一个topic" class="headerlink" title="新建一个topic"></a>新建一个topic</h6><pre><code>bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic {topic-name} --partitions {partition_name} --replication-factor {replication-factor}
+
+1. {topic-name} topic名
+2. {partition_name} 分区数
+3. {replication-factor} 复制因子
+</code></pre><h6 id="本地模拟producer发送kafka消息"><a href="#本地模拟producer发送kafka消息" class="headerlink" title="本地模拟producer发送kafka消息"></a>本地模拟producer发送kafka消息</h6><pre><code>bin/kafka-console-producer.sh --broker-list localhost:9092 localhost:9093 localhost:9094 --topic {topic-name}
+</code></pre><h6 id="本地模拟consume接收kafka消息"><a href="#本地模拟consume接收kafka消息" class="headerlink" title="本地模拟consume接收kafka消息"></a>本地模拟consume接收kafka消息</h6><pre><code>bin/kafka-console-consumer.sh --bootstrap-server {server1} {server2} --topic {topic-name} --from-beginning
+</code></pre><h6 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h6><pre><code>1.创建topic时，不可以使用 &quot;.&quot; 或者 &quot;_&quot;，容易引发错误
+2.kafka端口2181，broker端口为9092开头，不可混淆
+3.获取一个文件内指定字符所在位置 grep localhost /etc/hosts
+4.查找一个文件所在位置 find / -name &apos;hosts&apos;
+</code></pre><h4 id="本地先使用测试数据实现kafka"><a href="#本地先使用测试数据实现kafka" class="headerlink" title="本地先使用测试数据实现kafka"></a>本地先使用测试数据实现kafka</h4><p>首先定义一个 TestController.php，通过队列形式异步记录日志内容，代码如下：</p>
+<pre><code>&lt;?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Jobs\TestKafka;
+use Illuminate\Http\Request;
+
+class TestController extends AbstractController
+{
+    static $num = 0;
+
+    public function index()
+    {
+        $string = self::$num + 1;
+
+        $message = $string . &apos; :&apos; . date(&apos;Y-m-d H:i:s&apos;, time()) . &apos; :&apos; . rand(10000, 99999);
+
+        TestKafka::dispatch($message);
+
+        return ok(__FUNCTION__, compact(&apos;message&apos;));
+    }
+}
+</code></pre><p>我们创建一个TestKafka Job任务，往日志中写入内容，代码如下：</p>
+<pre><code>&lt;?php
+
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+
+class TestKafka implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $data;
+
+    public function __construct(string $data)
+    {
+        $this-&gt;data = $data;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        \Log::channel(&apos;successLog&apos;)
+            -&gt;error(&apos;测试kafka&apos;, [
+                &apos;time&apos; =&gt; date(&apos;Y-m-d H:i:s&apos;),
+                &apos;date&apos; =&gt; $this-&gt;data,
+                &apos;--------------------------------- data 分割 ---------------&apos;,
+            ]);
+    }
+}
+</code></pre><p>.env文件修改QUEUE_DRIVER</p>
+<pre><code>QUEUE_DRIVER=kafka
+</code></pre><p>配置成功，然后我们需要开启队列服务，本地可使用命令</p>
+<pre><code>php artisan queue:work
+</code></pre><p>但是报错，报错显示:</p>
+<pre><code>Configuration property offset.store.method is deprecated: Offset commit store method: &apos;file&apos; - DEPRECATED: local file store (offset.store.path, et.al), &apos;broker&apos; - broker commit store (requires Apache Kafka 0.8.2 or later on the broker).
+</code></pre><p>这里报错是因为php-kafka支持的kafka版本为0.8，实际的kafka版本为1.1，需要修复一下，我们进入到项目目录<br>/vendor/rapide/laravel-queue-kafka/src/Queue/Connector/KafkaConnector.php，搜索‘offset.store.method’<br>将该行注销，再次运行将成功。</p>
+<pre><code>菜鸟一枚，本博客为试写，希望发现一个不一样的自己，不一样的习惯！
+</code></pre>
     </div>
   </div>
   
