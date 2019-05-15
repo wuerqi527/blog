@@ -8,12 +8,12 @@
   
   
   
-  <title>MAC下LNMP环境启动、配置虚拟域名 | 大鲨鱼的博客</title>
+  <title>关于php的declare语句中的tick的解释 | 大鲨鱼的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Hexo, theme-bmw">
+    <meta name="keywords" content="服务器相关,php,horizon,pcntl,信号,">
   
 
   <script>
@@ -191,13 +191,20 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>MAC下LNMP环境启动、配置虚拟域名</span>
+    <span>关于php的declare语句中的tick的解释</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2019-05-07
+      2019-05-15
     </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/服务器相关/">
+            服务器相关
+          </a>
+      </span>
     
     
       <span>
@@ -210,17 +217,7 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <hr>
-<p>title: 关于php的declare语句中的tick的解释<br>date: 2019-05-15 17:09:33<br>tags:</p>
-<ul>
-<li>php</li>
-<li>horizon</li>
-<li>pcntl</li>
-<li>信号<br>categories:</li>
-<li>服务器相关</li>
-</ul>
-<hr>
-<h2 id="关于php的declare语句中的tick的解释"><a href="#关于php的declare语句中的tick的解释" class="headerlink" title="关于php的declare语句中的tick的解释"></a>关于php的declare语句中的tick的解释</h2><h4 id="什么是declare"><a href="#什么是declare" class="headerlink" title="什么是declare"></a>什么是declare</h4><p>declare是php的流程控制结构，directive目前支持两个指令（ticks和encoding），ticks的使用配合register_tick_function()（当然还有unregister_tick_function()）使用。declare结构用来设定一段代码的执行指令。declare的语法和其它流程控制结构相似：</p>
+      <h2 id="关于php的declare语句中的tick的解释"><a href="#关于php的declare语句中的tick的解释" class="headerlink" title="关于php的declare语句中的tick的解释"></a>关于php的declare语句中的tick的解释</h2><h4 id="什么是declare"><a href="#什么是declare" class="headerlink" title="什么是declare"></a>什么是declare</h4><p>declare是php的流程控制结构，directive目前支持两个指令（ticks和encoding），ticks的使用配合register_tick_function()（当然还有unregister_tick_function()）使用。declare结构用来设定一段代码的执行指令。declare的语法和其它流程控制结构相似：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">declare(directive)</span><br><span class="line">statement</span><br></pre></td></tr></table></figure>
 <p>declare：<code>声明，宣布</code><br>directive：<code>指示，指令</code><br>statement：<code>声明，陈述</code></p>
 <p>tick是在一个declare代码段中解释器每执行N条低级语句就会发生的事件。N的值是在declare中的directive部分用tick=N来指定。</p>
@@ -259,7 +256,7 @@ tick是一个事件，tick时间在php每执行N条低级语句就发生一次�
         
           本文作者 : 527 <br>
         
-        原文链接 : <a href="">https://www.im527.cn/2019/05/07/关于php的declare语句中tick的解释/</a><br>
+        原文链接 : <a href="">https://www.im527.cn/2019/05/15/关于php的declare语句中tick的解释/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -316,6 +313,33 @@ tick是一个事件，tick时间在php每执行N条低级语句就发生一次�
     <div class="article-meta pull-left">
       <span>
         
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/php/">
+              #php
+            </a>
+          </span>
+          
+          <span class="span--tag">
+            <a href="/tags/horizon/">
+              #horizon
+            </a>
+          </span>
+          
+          <span class="span--tag">
+            <a href="/tags/pcntl/">
+              #pcntl
+            </a>
+          </span>
+          
+          <span class="span--tag">
+            <a href="/tags/信号/">
+              #信号
+            </a>
+          </span>
+          
+        
       </span>
     </div>
     <div class="article-meta pull-right">
@@ -336,15 +360,9 @@ tick是一个事件，tick时间在php每执行N条低级语句就发生一次�
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2019/04/09/Centos 服务器安装 Laravel Kafka/" target="_self">Centos 服务器安装 Laravel Kafka</a>
-      </div>
-    
-    
-      <div class="nav-next">
-        下一篇:
         <a href="/2019/05/07/MAC下LNMP环境启动、配置虚拟域名/" target="_self">MAC下LNMP环境启动、配置虚拟域名</a>
-        <i class="iconfont icon-next"></i>
       </div>
+    
     
   </nav>
 
