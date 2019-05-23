@@ -8,12 +8,12 @@
   
   
   
-  <title>关于php的declare语句中的tick的解释 | 大鲨鱼的博客</title>
+  <title>__autoload() 和 spl_autoload_register() 区别 | 大鲨鱼的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="服务器相关,php,horizon,pcntl,信号,">
+    <meta name="keywords" content="函数,php,函数,">
   
 
   <script>
@@ -191,24 +191,24 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>关于php的declare语句中的tick的解释</span>
+    <span>__autoload() 和 spl_autoload_register() 区别</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2019-05-15
+      2019-05-23
     </span>
     
       <span>
         分类 : 
-          <a href="/categories/服务器相关/">
-            服务器相关
+          <a href="/categories/函数/">
+            函数
           </a>
       </span>
     
     
       <span>
-        浏览 : <span class="article-timer" data-identity="关于php的declare语句中tick的解释"></span>
+        浏览 : <span class="article-timer" data-identity="autoload-和spl-autoload-register-区别"></span>
       </span>
     
   </div>
@@ -217,35 +217,27 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h2 id="关于php的declare语句中的tick的解释"><a href="#关于php的declare语句中的tick的解释" class="headerlink" title="关于php的declare语句中的tick的解释"></a>关于php的declare语句中的tick的解释</h2><h4 id="什么是declare"><a href="#什么是declare" class="headerlink" title="什么是declare"></a>什么是declare</h4><p>declare是php的流程控制结构，directive目前支持两个指令（ticks和encoding），ticks的使用配合register_tick_function()（当然还有unregister_tick_function()）使用。declare结构用来设定一段代码的执行指令。declare的语法和其它流程控制结构相似：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">declare(directive)</span><br><span class="line">statement</span><br></pre></td></tr></table></figure>
-<p>declare：<code>声明，宣布</code><br>directive：<code>指示，指令</code><br>statement：<code>声明，陈述</code></p>
-<p>tick是在一个declare代码段中解释器每执行N条低级语句就会发生的事件。N的值是在declare中的directive部分用tick=N来指定。</p>
-<p>在每个tick中出现的事件是由register_tick_function()来指定的。</p>
-<p>通俗解释一下：</p>
-<pre><code>ticks参数标识运行多少语句调用一次register_tick_function()。
-register_tick_function函数定义了每个tick事件发生时的处理函数。那么什么是tick事件？
-tick是一个事件，tick时间在php每执行N条低级语句就发生一次，N由declare语句指定。
-可以用register_tick_function()来指定tick事件发生时应该执行的操作。
-</code></pre><h4 id="什么是低级语句"><a href="#什么是低级语句" class="headerlink" title="什么是低级语句"></a>什么是低级语句</h4><pre><code>1.简单语句：空语句（就一个；号），return,break,continue,throw, goto,global,static,unset,echo, 内置的HTML文本，分号结束的表达式等均算一个语句。
-2.复合语句：完整的if/elseif,while,do...while,for,foreach,switch,try...catch等算一个语句。
-3.语句块：{} 括出来的语句块。
-4.最后特别的：declare块本身也算一个语句(按道理declare块也算是复合语句，但此处特意将其独立出来)。
-</code></pre><p>看一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">function doticks ()&#123;</span><br><span class="line">    echo &apos;ticks&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">register_tick_function(&apos;doticks&apos;);</span><br><span class="line"></span><br><span class="line">declare(ticks = 1) &#123;</span><br><span class="line">    for ($x = 1; $x &lt; 10; $x++) &#123;</span><br><span class="line">        echo  $x * $x . &apos;&lt;br /&gt;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">ticksticks4</span><br><span class="line">ticksticks9</span><br><span class="line">ticksticks16</span><br><span class="line">ticksticks25</span><br><span class="line">ticksticks36</span><br><span class="line">ticksticks49</span><br><span class="line">ticksticks64</span><br><span class="line">ticksticks81</span><br><span class="line">ticksticksticksticks</span><br></pre></td></tr></table></figure>
-<p>解释：</p>
-<pre><code>首先完整的for循环算一个语句，但必须要等循环结束才算，因此在编译时for循环里面的echo 算第一个语句。
-所以第一个doticks是在第一个echo后执行的，也就是1输出后才发生第一个tick事件。
-在$x 从1到9的循环中，每个循环包括两个语句，一个echo, 一个for循环。在81输出后，因为echo是一条语句，因此输出第一个ticks。
-同时$x=9的这个for循环也结束了。
-</code></pre><p>这是只是到ticksticksticks81这里！那最后一行连续输出4个ticks是怎么实现的呢？</p>
-<pre><code>1.81输出后，因为本身是echo语句，所以算一个低级语句，输出一个ticks。
-2.81输出后，本次循环完成，算一个低级语句，输出一个ticks。
-3.当$x=10时，不满足循环条件，该for循环结束，输出一个ticks。
-4.declare之前强调的，本身就属于一个低级语句，输出一个ticks。
-</code></pre>
+      <h1 id="autoload-和spl-autoload-register-区别"><a href="#autoload-和spl-autoload-register-区别" class="headerlink" title="__autoload() 和spl_autoload_register()区别"></a>__autoload() 和spl_autoload_register()区别</h1><h2 id="autoload"><a href="#autoload" class="headerlink" title="__autoload()"></a>__autoload()</h2><p>当PHP引擎遇到试图实例化未知类的操作时，会调用__autoload()方法，并将类名当做字符串参数传递给它。<br>代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//index.php</span><br><span class="line">function __autoload($class) &#123;</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    require_once $file;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$text = new test();</span><br><span class="line"></span><br><span class="line">//test.php</span><br><span class="line">class test &#123;</span><br><span class="line">  public function __construct() &#123;</span><br><span class="line">     echo &quot;this is test&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当在index.php中初始化test时，因为找不到对应类，就会调用<strong>autoload()引入对应文件。<br>但是，因为</strong>autoload()在一个进程中只能定义它一次。当我们在进行项目合并的时候，如果出现多个autoload()需要将其合并为一个函数。那么，出现了spl_autoload_register()。</p>
+<h2 id="spl-autoload-register"><a href="#spl-autoload-register" class="headerlink" title="spl_autoload_register()"></a>spl_autoload_register()</h2><p>上述代码可以写成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//index.php</span><br><span class="line">function autoload_test($class) &#123;</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    require_once $file;</span><br><span class="line">&#125;</span><br><span class="line">spl_autoload_register(&quot;autoload_test&quot;);</span><br><span class="line">$text = new test();</span><br><span class="line"></span><br><span class="line">//test.php</span><br><span class="line">class test &#123;</span><br><span class="line">  public function __construct() &#123;</span><br><span class="line">     echo &quot;this is test&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用此函数可以生成一个__autoload()队列，可以注册多个函数。<br>代码如下，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//index.php</span><br><span class="line">function autoload_test($class) &#123;</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    require_once $file;</span><br><span class="line">&#125;</span><br><span class="line">function autoload_vos($class) &#123;</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    require_once $file;</span><br><span class="line">&#125;</span><br><span class="line">spl_autoload_register(&quot;autoload_test&quot;);</span><br><span class="line">spl_autoload_register(&quot;autoload_vos&quot;);</span><br><span class="line">$text = new test();</span><br></pre></td></tr></table></figure>
+<p>可以注册多个函数。<br>函数执行顺序是先加载的先执行。</p>
+<p>如果出现类继承情况<br>假设文件结构如下：</p>
+<pre><code>|-index.php
+|-child.php
+|-pa.php
+|-grand.php
+</code></pre><p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//index.php</span><br><span class="line"></span><br><span class="line">function loadprint( $class ) &#123;</span><br><span class="line">    echo $class.&quot;&lt;br /&gt;&quot;;   //code one</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    if (is_file($file)) &#123;</span><br><span class="line">      require_once($file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">spl_autoload_register( &apos;loadprint&apos; );</span><br><span class="line"></span><br><span class="line">$obj = new child();</span><br><span class="line">$obj-&gt;hello();</span><br><span class="line"></span><br><span class="line">//child.php</span><br><span class="line">class child extends pa &#123;</span><br><span class="line">   //正文部分</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//pa.php</span><br><span class="line">class pa extends grand &#123;</span><br><span class="line">  //正文部分</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//grand.php</span><br><span class="line">class grand &#123;</span><br><span class="line">  public function hello() &#123;</span><br><span class="line">    echo &quot;im grand&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行index.php也能得到想要的结果。<br>code one输出结果是：</p>
+<pre><code>child
+pa
+grand
+</code></pre><p>这里自动加载的过程中对继承关系也同样适用。</p>
+
     </div>
   </div>
   
@@ -256,7 +248,7 @@ tick是一个事件，tick时间在php每执行N条低级语句就发生一次�
         
           本文作者 : 527 <br>
         
-        原文链接 : <a href="">https://www.im527.cn/2019/05/15/关于php的declare语句中tick的解释/</a><br>
+        原文链接 : <a href="">https://www.im527.cn/2019/05/23/autoload-和spl-autoload-register-区别/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -322,20 +314,8 @@ tick是一个事件，tick时间在php每执行N条低级语句就发生一次�
           </span>
           
           <span class="span--tag">
-            <a href="/tags/horizon/">
-              #horizon
-            </a>
-          </span>
-          
-          <span class="span--tag">
-            <a href="/tags/pcntl/">
-              #pcntl
-            </a>
-          </span>
-          
-          <span class="span--tag">
-            <a href="/tags/信号/">
-              #信号
+            <a href="/tags/函数/">
+              #函数
             </a>
           </span>
           
@@ -360,15 +340,9 @@ tick是一个事件，tick时间在php每执行N条低级语句就发生一次�
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2019/05/07/MAC下LNMP环境启动、配置虚拟域名/" target="_self">MAC下LNMP环境启动、配置虚拟域名</a>
+        <a href="/2019/05/15/关于php的declare语句中tick的解释/" target="_self">关于php的declare语句中的tick的解释</a>
       </div>
     
-    
-      <div class="nav-next">
-        下一篇:
-        <a href="/2019/05/23/autoload-和spl-autoload-register-区别/" target="_self">__autoload() 和 spl_autoload_register() 区别</a>
-        <i class="iconfont icon-next"></i>
-      </div>
     
   </nav>
 
