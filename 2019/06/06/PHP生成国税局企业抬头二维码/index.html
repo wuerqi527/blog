@@ -8,12 +8,12 @@
   
   
   
-  <title>__autoload() 和 spl_autoload_register() 区别 | 大鲨鱼的博客</title>
+  <title>PHP生成国税局企业抬头二维码 | 大鲨鱼的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="函数,php,函数,">
+    <meta name="keywords" content="Hexo, theme-bmw">
   
 
   <script>
@@ -191,24 +191,17 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>__autoload() 和 spl_autoload_register() 区别</span>
+    <span>PHP生成国税局企业抬头二维码</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2019-05-23
+      2019-06-06
     </span>
     
-      <span>
-        分类 : 
-          <a href="/categories/函数/">
-            函数
-          </a>
-      </span>
-    
     
       <span>
-        浏览 : <span class="article-timer" data-identity="autoload-和spl-autoload-register-区别"></span>
+        浏览 : <span class="article-timer" data-identity="PHP生成国税局企业抬头二维码"></span>
       </span>
     
   </div>
@@ -217,26 +210,89 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h2 id="autoload"><a href="#autoload" class="headerlink" title="__autoload()"></a>__autoload()</h2><p>当PHP引擎遇到试图实例化未知类的操作时，会调用__autoload()方法，并将类名当做字符串参数传递给它。<br>代码如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//index.php</span><br><span class="line">function __autoload($class) &#123;</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    require_once $file;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$text = new test();</span><br><span class="line"></span><br><span class="line">//test.php</span><br><span class="line">class test &#123;</span><br><span class="line">  public function __construct() &#123;</span><br><span class="line">     echo &quot;this is test&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当在index.php中初始化test时，因为找不到对应类，就会调用<strong>autoload()引入对应文件。<br>但是，因为</strong>autoload()在一个进程中只能定义它一次。当我们在进行项目合并的时候，如果出现多个autoload()需要将其合并为一个函数。那么，出现了spl_autoload_register()。</p>
-<h2 id="spl-autoload-register"><a href="#spl-autoload-register" class="headerlink" title="spl_autoload_register()"></a>spl_autoload_register()</h2><p>上述代码可以写成：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//index.php</span><br><span class="line">function autoload_test($class) &#123;</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    require_once $file;</span><br><span class="line">&#125;</span><br><span class="line">spl_autoload_register(&quot;autoload_test&quot;);</span><br><span class="line">$text = new test();</span><br><span class="line"></span><br><span class="line">//test.php</span><br><span class="line">class test &#123;</span><br><span class="line">  public function __construct() &#123;</span><br><span class="line">     echo &quot;this is test&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用此函数可以生成一个__autoload()队列，可以注册多个函数。<br>代码如下，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//index.php</span><br><span class="line">function autoload_test($class) &#123;</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    require_once $file;</span><br><span class="line">&#125;</span><br><span class="line">function autoload_vos($class) &#123;</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    require_once $file;</span><br><span class="line">&#125;</span><br><span class="line">spl_autoload_register(&quot;autoload_test&quot;);</span><br><span class="line">spl_autoload_register(&quot;autoload_vos&quot;);</span><br><span class="line">$text = new test();</span><br></pre></td></tr></table></figure>
-<p>可以注册多个函数。<br>函数执行顺序是先加载的先执行。</p>
-<p>如果出现类继承情况<br>假设文件结构如下：</p>
-<pre><code>|-index.php
-|-child.php
-|-pa.php
-|-grand.php
-</code></pre><p>代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//index.php</span><br><span class="line"></span><br><span class="line">function loadprint( $class ) &#123;</span><br><span class="line">    echo $class.&quot;&lt;br /&gt;&quot;;   //code one</span><br><span class="line">    $file = $class . &apos;.php&apos;;</span><br><span class="line">    if (is_file($file)) &#123;</span><br><span class="line">      require_once($file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">spl_autoload_register( &apos;loadprint&apos; );</span><br><span class="line"></span><br><span class="line">$obj = new child();</span><br><span class="line">$obj-&gt;hello();</span><br><span class="line"></span><br><span class="line">//child.php</span><br><span class="line">class child extends pa &#123;</span><br><span class="line">   //正文部分</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//pa.php</span><br><span class="line">class pa extends grand &#123;</span><br><span class="line">  //正文部分</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//grand.php</span><br><span class="line">class grand &#123;</span><br><span class="line">  public function hello() &#123;</span><br><span class="line">    echo &quot;im grand&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行index.php也能得到想要的结果。<br>code one输出结果是：</p>
-<pre><code>child
-pa
-grand
-</code></pre><p>这里自动加载的过程中对继承关系也同样适用。</p>
+      <h1 id="php生成国税局发票企业抬头二维码"><a href="#php生成国税局发票企业抬头二维码" class="headerlink" title="php生成国税局发票企业抬头二维码"></a>php生成国税局发票企业抬头二维码</h1><h2 id="国税局二维码生成规则"><a href="#国税局二维码生成规则" class="headerlink" title="国税局二维码生成规则"></a>国税局二维码生成规则</h2><h3 id="生成规则"><a href="#生成规则" class="headerlink" title="生成规则"></a>生成规则</h3><p>生成国税局企业抬头二维码和生成普通二维码有一定区别，二维码生成规则是先生成一段信息，通过第三方二维码生成器（QRCode、草料），国税局二维码生成首先需要一些指定信息，进行CRC16计算处理，首先看一下国税局生成二维码需要哪些内容：</p>
+<h3 id="校验"><a href="#校验" class="headerlink" title="校验"></a>校验</h3><p>手机打开小程序，搜索“税务发票助手”，输入企业相关信息，会生成企业发票抬头，通过微信扫描企业发票抬头可得出生成的加密后的串，根据编码规则去除“起始符”，“结束符”，“版本号”，得到的字符串在base64_decode()一下，获取CRC16计算码，和发票抬头信息，这里需要关注CRC16码，也是整篇文章的核心。</p>
+<p>php.net也有类似生成CRC16的相关方法，但是测试之后无法使用，具体文档地址在：<a href="https://php.net/manual/en/function.crc32.php" target="_blank" rel="noopener">https://php.net/manual/en/function.crc32.php</a></p>
+<h3 id="编码内容和格式"><a href="#编码内容和格式" class="headerlink" title="编码内容和格式"></a>编码内容和格式</h3><table>
+<thead>
+<tr>
+<th>索引</th>
+<th>名称</th>
+<th>字符长度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>起始符</td>
+<td>1</td>
+<td>特定字符“$”开始</td>
+</tr>
+<tr>
+<td>2</td>
+<td>版本号</td>
+<td>2</td>
+<td>固定值 “01”</td>
+</tr>
+<tr>
+<td>3</td>
+<td>分隔符</td>
+<td>3</td>
+<td>使用英文半角“&lt;/&gt;” 组成分隔符</td>
+</tr>
+<tr>
+<td>4</td>
+<td>企业名称</td>
+<td>100</td>
+<td>最大100字符（50汉字）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>纳税人识别号</td>
+<td>20</td>
+<td>15-20字段</td>
+</tr>
+<tr>
+<td>6</td>
+<td>地址电话</td>
+<td>100</td>
+<td>最大100字符（50汉字）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>开户银行以及开户账号</td>
+<td>100</td>
+<td>最大100字符（50汉字）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>CRC16算法</td>
+<td>4</td>
+<td>CRC16算法最后生成4字符，具体可自行百度</td>
+</tr>
+<tr>
+<td>9</td>
+<td>结束符</td>
+<td>1</td>
+<td>特定符号“$”结束</td>
+</tr>
+</tbody>
+</table>
+<p>便捷开票二维码内容格式如下：</p>
+<p>1.首先生成CRC16算法</p>
+<pre><code>1. 生成字符串 企业名称&lt;/&gt;纳税人识别号&lt;/&gt;地址电话&lt;/&gt;开户银行以及账号&lt;/&gt;
+2. 利用CRC16算法，对 第1 进行操作
+3. 生成一个4位的十六进制数据，获取4位的CRC计算码
+</code></pre><p>2.将第一条中第一条生成的字符串，后面跟上CRC16计算码 得出 新的字符串</p>
+<pre><code>起始符 + 版本号 + base64_encode(新的字符串) + 结束符
+</code></pre><h3 id="CRC16方法"><a href="#CRC16方法" class="headerlink" title="CRC16方法"></a>CRC16方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 开票相关帮助</span><br><span class="line"> *</span><br><span class="line"> * @author 527</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">namespace App\Helpers;</span><br><span class="line"></span><br><span class="line">class InvoiceHelper</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    public static $normal = 0x0000;</span><br><span class="line">    public static $crc16  = 0x8005;</span><br><span class="line"></span><br><span class="line">    // 根据发票信息生成crc16校验码</span><br><span class="line">    public static function crc16(string $invoiceInfo)</span><br><span class="line">    &#123;</span><br><span class="line">        // 获取字节流数组（ASCII码）</span><br><span class="line">        $bytes = [];</span><br><span class="line"></span><br><span class="line">        for ($byt = 0; $byt &lt; strlen($invoiceInfo); $byt ++) &#123;</span><br><span class="line">            $bytes[] = ord($invoiceInfo[$byt]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for ($i = 0; $i &lt; count($bytes); $i ++) &#123;</span><br><span class="line">            self::creatingCrc16($bytes[$i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $r = 0;</span><br><span class="line">        self::creatingCrc16($r);</span><br><span class="line">        self::creatingCrc16($r);</span><br><span class="line"></span><br><span class="line">        return sprintf(&quot;%04X&quot;, self::$normal);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // crc算法</span><br><span class="line">    // @see https://blog.csdn.net/sqlxx/article/details/76474600</span><br><span class="line">    private static function creatingCrc16(string $string)</span><br><span class="line">    &#123;</span><br><span class="line">        $temp = 0;</span><br><span class="line">        $data = $string;</span><br><span class="line"></span><br><span class="line">        for ($i = 0; $i &lt; 8; $i ++) &#123;</span><br><span class="line">            $temp = self::$normal &amp; 0x8000;</span><br><span class="line"></span><br><span class="line">            self::$normal = self::$normal &lt;&lt; 1;</span><br><span class="line">            self::$normal = self::$normal &amp; 0x0000ffff;</span><br><span class="line"></span><br><span class="line">            $numIn = $data &amp; 0x80;</span><br><span class="line">            $numIn = $numIn &gt;&gt; 7;</span><br><span class="line"></span><br><span class="line">            self::$normal = self::$normal ^ $numIn;</span><br><span class="line"></span><br><span class="line">            if ($temp == 0x8000) &#123;</span><br><span class="line">                self::$normal = self::$normal ^ self::$crc16;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $data = $data &lt;&lt; 1;</span><br><span class="line">            self::$normal = self::$normal &amp; 0x0000ffff;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 生成二维码开票内容</span><br><span class="line">     *</span><br><span class="line">     * @param $invoice array 开票内容</span><br><span class="line">     *     @param name         string 企业名称</span><br><span class="line">     *     @param tax_no       string 税号</span><br><span class="line">     *     @param address      string 企业地址</span><br><span class="line">     *     @param open_bank    string 开户银行</span><br><span class="line">     *     @param open_account string 开户账号</span><br><span class="line">     *     @param telephone    string 电话号码</span><br><span class="line">     *</span><br><span class="line">     * @return $imgStream</span><br><span class="line">     */</span><br><span class="line">    public static function buildInvoiceTitle(array $corpInfo)</span><br><span class="line">    &#123;</span><br><span class="line">        // 拼接成国税局指定发票格式</span><br><span class="line">        $string = &apos;&apos;;</span><br><span class="line">        $string .= $corpInfo[&apos;name&apos;] . &apos;&lt;/&gt;&apos;;</span><br><span class="line">        $string .= $corpInfo[&apos;tax_no&apos;] . &apos;&lt;/&gt;&apos;;</span><br><span class="line">        $string .= ($corpInfo[&apos;address&apos;] ?? &apos;&apos;) . ($corpInfo[&apos;telephone&apos;] ?? &apos;&apos;) . &apos;&lt;/&gt;&apos;;</span><br><span class="line">        $string .= ($corpInfo[&apos;open_bank&apos;] ?? &apos;&apos;) . ($corpInfo[&apos;open_account&apos;] ?? &apos;&apos;) . &apos;&lt;/&gt;&apos;;</span><br><span class="line"></span><br><span class="line">        // 生成crc16值</span><br><span class="line">        $crcValue = self::crc16($string);</span><br><span class="line"></span><br><span class="line">        $string .= $crcValue;</span><br><span class="line"></span><br><span class="line">        return &apos;$01&apos; . base64_encode($string) . &apos;$&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 生成发票抬头二维码</span><br><span class="line">    public static function generateQrCode(array $corpInfo)</span><br><span class="line">    &#123;</span><br><span class="line">        $invoiceTitleInfo = self::buildInvoiceTitle($corpInfo);</span><br><span class="line"></span><br><span class="line">        $imgStream = \QrCode::format(&apos;png&apos;)-&gt;size(300)-&gt;generate($invoiceTitleInfo);</span><br><span class="line"></span><br><span class="line">        return $imgStream;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 获取发票抬头二维码地址</span><br><span class="line">    public static function generateQrCodeUrl(array $corpInfo)</span><br><span class="line">    &#123;</span><br><span class="line">        $imgStream = self::generateQrCode($corpInfo);</span><br><span class="line"></span><br><span class="line">        $imgPath = &apos;invoice/corp/&apos; . str_random(40);</span><br><span class="line"></span><br><span class="line">        \Storage::put($imgPath, $imgStream);</span><br><span class="line">        $imgUrl = \Storage::url($imgPath);</span><br><span class="line"></span><br><span class="line">        return $imgUrl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该类可直接调用crc16()将指定字符串计算出crc16的计算码，同时也可以直接生成二维码，使用的二维码组件是QrCode，具体使用方式可访问：<a href="https://laravelacademy.org/post/2605.html" target="_blank" rel="noopener">https://laravelacademy.org/post/2605.html</a></p>
+<p>生成的二维码数据为：</p>
+<pre><code>$015rW35Y2X6auY54Gv56eR5oqA5pyJ6ZmQ5YWs5Y+4PC8+OTE0NjkwMjdNQTVSSDA5TTBSPC8+5rW35Y2X55yB6ICB5Z+O6auY5paw5oqA5pyv5Lqn5Lia56S66IyD5Yy65rW35Y2X55Sf5oCB6L2v5Lu2NDAwODUzODA2ODwvPuS4reWbveW3peWVhumTtuihjOa+hOi/iOi9r+S7tuWbreaUr+ihjDIyMDEwODA1MDkxMDAwODk1NjQ8Lz44MUE5$
+</code></pre><p>生成的二维码样式如下：</p>
+<pre><code>https://ai-loan-kbb-dev-1251506165.cos.ap-shanghai.myqcloud.com/invoice/corp/dJ2RWbPFaVRxNvNAekbf17IKBbKGvyz1jhVKyCM2
+</code></pre><p>参考文档：<a href="https://blog.csdn.net/inite/article/details/78930983" target="_blank" rel="noopener">https://blog.csdn.net/inite/article/details/78930983</a></p>
 
     </div>
   </div>
@@ -248,7 +304,7 @@ grand
         
           本文作者 : 527 <br>
         
-        原文链接 : <a href="">https://www.im527.cn/2019/05/23/autoload-和spl-autoload-register-区别/</a><br>
+        原文链接 : <a href="">https://www.im527.cn/2019/06/06/PHP生成国税局企业抬头二维码/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -305,21 +361,6 @@ grand
     <div class="article-meta pull-left">
       <span>
         
-          <i class="iconfont icon-06tags"></i>标签: 
-          
-          <span class="span--tag">
-            <a href="/tags/php/">
-              #php
-            </a>
-          </span>
-          
-          <span class="span--tag">
-            <a href="/tags/函数/">
-              #函数
-            </a>
-          </span>
-          
-        
       </span>
     </div>
     <div class="article-meta pull-right">
@@ -340,15 +381,9 @@ grand
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2019/05/15/关于php的declare语句中tick的解释/" target="_self">关于php的declare语句中的tick的解释</a>
+        <a href="/2019/05/23/autoload-和spl-autoload-register-区别/" target="_self">__autoload() 和 spl_autoload_register() 区别</a>
       </div>
     
-    
-      <div class="nav-next">
-        下一篇:
-        <a href="/2019/06/06/PHP生成国税局企业抬头二维码/" target="_self">PHP生成国税局企业抬头二维码</a>
-        <i class="iconfont icon-next"></i>
-      </div>
     
   </nav>
 
