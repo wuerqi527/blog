@@ -8,12 +8,12 @@
   
   
   
-  <title>APP_DEBUG源码追踪 | 大鲨鱼的博客</title>
+  <title>PHP 魔术方法 | 大鲨鱼的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="PHP,日常工作,">
+    <meta name="keywords" content="Hexo, theme-bmw">
   
 
   <script>
@@ -191,24 +191,17 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>APP_DEBUG源码追踪</span>
+    <span>PHP 魔术方法</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2019-07-24
+      2019-08-08
     </span>
     
-      <span>
-        分类 : 
-          <a href="/categories/PHP/">
-            PHP
-          </a>
-      </span>
-    
     
       <span>
-        浏览 : <span class="article-timer" data-identity="APP-DEBUG源码追踪"></span>
+        浏览 : <span class="article-timer" data-identity="PHP-魔术方法"></span>
       </span>
     
   </div>
@@ -217,22 +210,21 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h1 id="APP-DEBUG-到底有什么作用"><a href="#APP-DEBUG-到底有什么作用" class="headerlink" title="APP_DEBUG 到底有什么作用"></a>APP_DEBUG 到底有什么作用</h1><p>标签：日常工作、Laravel</p>
-<blockquote>
-<p>.env中有一个常量<code>APP_DEBUG</code>，都知道APP_DEBUG是用来展示/屏蔽错误信息的，但是从未了解过是一个什么流程，今天刚好可以借此机会了解一下…</p>
+      <h1 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h1><blockquote>
+<p>复习一下魔术方法</p>
 </blockquote>
-<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>我们需要设置debug是否展示，APP_DEBUG所在位置 <code>.env</code>中，如果希望展示异常信息：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APP_DEBUG=<span class="keyword">true</span></span><br></pre></td></tr></table></figure>
-<p>不希望展示异常信息</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APP_DEBUG=<span class="keyword">false</span></span><br></pre></td></tr></table></figure>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>Laravel 框架所有异常包括错误，最终都会汇集至\App\Exceptions\Handler::render($request, $exception中)，该方法可以扩展你所要处理的异常，比如项目中，我们就将该方法添加json返回异常信息提供给前端作为异常情况接口返回值，同时该class中还有report($exception)方法，结合Laravel自带组件Monolog进行日志记录。</p>
-<p>我们首先了解到，该render方法继承至\Illuminate\Foundation\Exceptions\Handler::render($request, $exception)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Render an exception into a response.</span><br><span class="line"> *</span><br><span class="line"> * @param  \Illuminate\Http\Request  $request</span><br><span class="line"> * @param  \Exception  $e</span><br><span class="line"> * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response</span><br><span class="line"> */</span><br><span class="line">public function render($request, Exception $e)</span><br><span class="line">&#123;</span><br><span class="line">    if (method_exists($e, &apos;render&apos;) &amp;&amp; $response = $e-&gt;render($request)) &#123;</span><br><span class="line">        return Router::toResponse($request, $response);</span><br><span class="line">    &#125; elseif ($e instanceof Responsable) &#123;</span><br><span class="line">        return $e-&gt;toResponse($request);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $e = $this-&gt;prepareException($e);</span><br><span class="line"></span><br><span class="line">    if ($e instanceof HttpResponseException) &#123;</span><br><span class="line">        return $e-&gt;getResponse();</span><br><span class="line">    &#125; elseif ($e instanceof AuthenticationException) &#123;</span><br><span class="line">        return $this-&gt;unauthenticated($request, $e);</span><br><span class="line">    &#125; elseif ($e instanceof ValidationException) &#123;</span><br><span class="line">        return $this-&gt;convertValidationExceptionToResponse($e, $request);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $request-&gt;expectsJson()</span><br><span class="line">                    ? $this-&gt;prepareJsonResponse($request, $e)</span><br><span class="line">                    : $this-&gt;prepareResponse($request, $e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最终会根据代码$request-&gt;expectsJson()判断是json返回还是普通返回，也就是 <code>$this-&gt;prepareJsonResponse($req    uest, $e)</code> 或 <code>$this-&gt;prepareResponse($request, $e)</code> 会调用 APP_DEBUG，进而确定返回结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">protected function prepareResponse($request, Exception $e)</span><br><span class="line">&#123;</span><br><span class="line">    if (! $this-&gt;isHttpException($e) &amp;&amp; config(&apos;app.debug&apos;)) &#123;</span><br><span class="line">        return $this-&gt;toIlluminateResponse($this-&gt;convertExceptionToResponse($e), $e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (! $this-&gt;isHttpException($e)) &#123;</span><br><span class="line">        $e = new HttpException(500, $e-&gt;getMessage());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $this-&gt;toIlluminateResponse(</span><br><span class="line">        $this-&gt;renderHttpException($e), $e</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>若我们的APP_DEBUG=true，我们查看一下convertExceptionToResponse() 和 toIlluminateResponse() 方法是如何处理的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">protected function convertExceptionToResponse(Exception $e)</span><br><span class="line">&#123;</span><br><span class="line">    return SymfonyResponse::create(</span><br><span class="line">        $this-&gt;renderExceptionContent($e),</span><br><span class="line">        $this-&gt;isHttpException($e) ? $e-&gt;getStatusCode() : 500,</span><br><span class="line">        $this-&gt;isHttpException($e) ? $e-&gt;getHeaders() : []</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected function toIlluminateResponse($response, Exception $e)</span><br><span class="line">&#123;</span><br><span class="line">    if ($response instanceof SymfonyRedirectResponse) &#123;</span><br><span class="line">        $response = new RedirectResponse(</span><br><span class="line">            $response-&gt;getTargetUrl(), $response-&gt;getStatusCode(), $response-&gt;headers-&gt;all()</span><br><span class="line">        );</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        $response = new Response(</span><br><span class="line">            $response-&gt;getContent(), $response-&gt;getStatusCode(), $response-&gt;headers-&gt;all()</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $response-&gt;withException($e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过上述代码可以看到，若APP_DEBUG=true，返回500的异常HTML，若APP_DEBUG=false,返回全部的异常信息（$exception）。</p>
+<h3 id="属性重载"><a href="#属性重载" class="headerlink" title="属性重载"></a>属性重载</h3><h4 id="set-string-name-value"><a href="#set-string-name-value" class="headerlink" title="__set(string $name, $value)"></a>__set(string $name, $value)</h4><p>在访问不可访问属性赋值时，__set()会被调用</p>
+<h4 id="get-string-name"><a href="#get-string-name" class="headerlink" title="__get(string $name)"></a>__get(string $name)</h4><p>读取不可访问的属性的值时，__get()会被调用</p>
+<h4 id="isset-string-name"><a href="#isset-string-name" class="headerlink" title="__isset(string $name)"></a>__isset(string $name)</h4><p>当不可访问的属性调用isset()或者empty()时，__isset()会被调用</p>
+<h4 id="unset-string-name"><a href="#unset-string-name" class="headerlink" title="__unset(string $name)"></a>__unset(string $name)</h4><p>当对不可访问属性调用unset()时，__unset()会被调用</p>
+<h3 id="方法重载"><a href="#方法重载" class="headerlink" title="方法重载"></a>方法重载</h3><h4 id="call-string-funcName-array-arguments"><a href="#call-string-funcName-array-arguments" class="headerlink" title="__call(string $funcName, array $arguments)"></a>__call(string $funcName, array $arguments)</h4><p>在对象中调用一个不可访问方法时，__call()会被调用</p>
+<h4 id="callStatic-string-funcName-array-arguments"><a href="#callStatic-string-funcName-array-arguments" class="headerlink" title="__callStatic(string $funcName, array $arguments)"></a>__callStatic(string $funcName, array $arguments)</h4><p>调用一个不存在的静态方法时，__callStatic()会被调用</p>
+<h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="__toString()"></a>__toString()</h4><p>echo（输出） 一个对象，自动调用该方法</p>
+<h4 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h4><p>当调用的对象呗序列化后，允许你处理序列化，返回特定的信息。</p>
+<h4 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h4><p>当调用的对象反序列化，允许你返回特定的信息。</p>
+<h4 id="autoland"><a href="#autoland" class="headerlink" title="__autoland()"></a>__autoland()</h4><p>尝试加载未定义的类，不返回报错信息</p>
+<h4 id="invoke"><a href="#invoke" class="headerlink" title="__invoke()"></a>__invoke()</h4><p>将类以函数的形式调用，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class Call&#123;</span><br><span class="line">    public function __invoke($params1, $params2)</span><br><span class="line">    &#123;</span><br><span class="line">        vd($params1 . $params2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 调用方式</span><br><span class="line"></span><br><span class="line">$obj = new Call;</span><br><span class="line">$obj(111,2222);</span><br><span class="line"></span><br><span class="line">// res</span><br><span class="line">1112222</span><br></pre></td></tr></table></figure>
 
     </div>
   </div>
@@ -244,7 +236,7 @@
         
           本文作者 : 527 <br>
         
-        原文链接 : <a href="">https://www.im527.cn/2019/07/24/APP-DEBUG源码追踪/</a><br>
+        原文链接 : <a href="">https://www.im527.cn/2019/08/08/PHP-魔术方法/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -301,15 +293,6 @@
     <div class="article-meta pull-left">
       <span>
         
-          <i class="iconfont icon-06tags"></i>标签: 
-          
-          <span class="span--tag">
-            <a href="/tags/日常工作/">
-              #日常工作
-            </a>
-          </span>
-          
-        
       </span>
     </div>
     <div class="article-meta pull-right">
@@ -330,15 +313,9 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2019/06/06/PHP生成国税局企业抬头二维码/" target="_self">PHP生成国税局企业抬头二维码</a>
+        <a href="/2019/07/24/APP-DEBUG源码追踪/" target="_self">APP_DEBUG源码追踪</a>
       </div>
     
-    
-      <div class="nav-next">
-        下一篇:
-        <a href="/2019/08/08/PHP-魔术方法/" target="_self">PHP 魔术方法</a>
-        <i class="iconfont icon-next"></i>
-      </div>
     
   </nav>
 
