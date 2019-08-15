@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="author" content="董沅鑫, yuanxin.me@gmail.com">
+  
+  
+  
+  <title>索引常见模型 | 大鲨鱼的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Hexo, theme-bmw">
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+  <script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+</head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">大鲨鱼的博客</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a href="/" target="_self">
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a href="/archives/" target="_self">
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a href="/categories/" target="_self">
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a href="/tags/" target="_self">
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a href="/friends/" target="_self">
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a href="/about/" target="_self">
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else="">作者</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a href="https://github.com/wuerqi527" target="_blank">
+                    Github
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>索引常见模型</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2019-08-15
+    </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="索引常见模型"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h1 id="索引常见模型"><a href="#索引常见模型" class="headerlink" title="索引常见模型"></a>索引常见模型</h1><blockquote>
+<p>索引的出现其实就是为了提高数据查询的效率，就像书的目录一样。</p>
+</blockquote>
+<p>索引的出现就是为了提高查询效率，但是实现索引的方式有很多种，所以这里也就引入了索引模型的概念。可以用于提高读写效率的数据结构很多，这里我先给你介绍三种常见的、比较简单的数据结构，他们分别是哈希表、有序数组和二叉搜索树、B树、B+树。</p>
+<h2 id="hash表"><a href="#hash表" class="headerlink" title="hash表"></a>hash表</h2><p>hash格式是通过key，对应多个字段和值，例如我需要个人信息，我们可以这么存储，首先是张三，张三有很多的个人资料，比如年龄是26，性别是男，等等等。</p>
+<p>hash索引做区间查询的速度很慢的。这种结构只能适用于只有等值查询的场景，比如一次只查一个值，Memcache以及其他一些NoSQL引擎。</p>
+<p>什么是区间查询，假如我们有500个用户，身份证号码是<br>[ID_CARD_{1} - ID_CARD_{500}]，这种是1-500区间，我们使用hash索引，只能逐个扫描，速度比较慢。但是有序数组在等值查询和范围查询场景中的性能就都非常优秀了，他可以支持区间查询。</p>
+<h2 id="有序数组"><a href="#有序数组" class="headerlink" title="有序数组"></a>有序数组</h2><p>举个例子，我们查询身份证，通过身份证号码获取身份证的姓名等信息，可以对应为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &apos;&#123;ID_CARD_NO&#125;&apos; =&gt; [</span><br><span class="line">        &apos;name&apos; =&gt; &apos;xxx&apos;,</span><br><span class="line">        &apos;age&apos;  =&gt; &apos;xxx&apos;,</span><br><span class="line">    ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>这里我们假设身份证号没有重复，这个数组就是按照身份证号递增的顺序保证的，我们可以使用二分法快速得到我们想要的身份证对应的人的信息。</p>
+<p>如果仅仅看查询销量，有序数组就是最好的数据结构，但是在更新数据额时候就比较麻烦了，你需要往中间插入记录就必须的挪动后面所有记录，成本太高。</p>
+<p><code>所以有序数组索引只适合于静态存储引擎。</code>比如你保存的是2017年某个城市人口的所有信息，不会变动的信息。</p>
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><p>树是数据结构中的重中之重，尤其以各类二叉树为学习的难点。深入了解二叉树原理，不光有二叉树、还有完全二叉树、满二叉树、线索二叉树、霍夫曼树、二叉排序树、平衡二叉树、红黑树、B树。</p>
+<p>首先来一些概念</p>
+<table>
+<thead>
+<tr>
+<th>名词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>结点 （n）</td>
+<td>结点是数据结构中的基础，是构成复杂数据的基本组成单位</td>
+</tr>
+<tr>
+<td>树  (tree)</td>
+<td>树是n个结点的有限集，n=0代表空树</td>
+</tr>
+<tr>
+<td>度</td>
+<td>结点拥有的子树数目成为结点的度。度也就是表示当前结点的子级有多少（下一级，非多级）</td>
+</tr>
+<tr>
+<td>孩子结点</td>
+<td>结点的子级（下级，非多级）</td>
+</tr>
+<tr>
+<td>双亲结点</td>
+<td>结点的父集</td>
+</tr>
+<tr>
+<td>兄弟结点</td>
+<td>一个父结点下的同层子结点</td>
+</tr>
+<tr>
+<td>层</td>
+<td>二叉树层数，金字塔层级</td>
+</tr>
+<tr>
+<td>树的深度</td>
+<td>最大层数为树的深度或者高度</td>
+</tr>
+<tr>
+<td>叶子</td>
+<td>没有任何子结点的结点称为叶子</td>
+</tr>
+</tbody>
+</table>
+<p>树：</p>
+<pre><code>1.有且只有一个特定的成为(Root)的结点。
+2.n&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集t1,t2,t3...，其中每一个集合本身又是一棵树，并且成为根的子树。
+3.n&gt;0时根节点是唯一的，不存在多个根结点。
+4.m&gt;0时，子树的个数没有限制，但他们一定是互不相交的。
+</code></pre><p><b>二叉树<b></b></b></p>
+<p>二叉树是n(n&gt;0)个结点的有限集合，该集合或者为空集（称为空二叉树），或者由一个根结点和两颗互不相交的、分别称为根结点的左子树和右子树组成。</p>
+<p>二叉树的特点：</p>
+<pre><code>1.每个结点最多两个子树，所以二叉树中不存在度大于2的结点。
+2.左子树和又子树是有顺序的，次序不能任意颠倒。
+3.即使树中某结点只有一颗子树，也要区分是左子树和右子树。
+</code></pre><p>二叉树性质：</p>
+<pre><code>1.二叉树的第i层最多有2^i-1个结点（i&gt;=1）
+2.二叉树中如果深度为k，最多有2^k-1个结点。（k&gt;=1）
+3.计算层数可以使用公式log2n + 1,（2^x = n），x向下取整，然后 + 1 即可计算层数。
+</code></pre><p>节点值必须大于等于做子结点值，小于右子结点值，每个结点必须满足这个特性，这就是二叉搜索树。</p>
+<p>我们在创建一个二叉搜索树时，就按照上述原则，如果0-15并非规矩规则，根据顺序的不同，可能层数也不同，得出的二叉树也不同。随机性很大。</p>
+<p><b>自平衡二叉树<b></b></b></p>
+<p>自平衡二叉搜索树或高度平衡二叉搜索树是一种特殊类型的二叉搜索树，它试图通过自动调整来尽量保持树的高度或层次尽可能小。</p>
+<h2 id="innodb的索引模型，B-树"><a href="#innodb的索引模型，B-树" class="headerlink" title="innodb的索引模型，B+树"></a>innodb的索引模型，B+树</h2><p>在InnoDB中，表都是根据主键顺序以索引的形式存放的，这种存储方式的表称为索引组织表。Innodb使用了B+TREE索引模型，所以数据都是存储在B+树中的。</p>
+<p>索引类型分为主键索引和非主键索引。</p>
+<p>主键索引的叶子节点存的是整行数据。在InnoDB里，主键索引也被称为聚簇索引（clustered index）。</p>
+<p>非主键索引的叶子节点内容是主键的值。在InnoDB中，非主键索引也被称为二级索引（secondary index）。</p>
+<h2 id="B-树"><a href="#B-树" class="headerlink" title="B-树"></a>B-树</h2><table>
+<thead>
+<tr>
+<th>名词</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阶（M）</td>
+<td>二叉树的阶数是一个结点的子节点数的最大值，对于一颗m阶的B-tree，每个结点至多可以拥有m个子结点，阶也是上文中提到的度，“阶”通常用M表示</td>
+</tr>
+<tr>
+<td>关键字（类似id，文中以K为解释）英文 keyword</td>
+<td>一般是结点内key的数量</td>
+</tr>
+<tr>
+<td>树的深度</td>
+<td>B-树的层数</td>
+</tr>
+</tbody>
+</table>
+<p>B-树是一种平衡的多路查找树，它在文件系统中非常有用，B树就是B-树。</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p2" alt="7225d19f42706110a240a86d8cfbe246.jpeg"></p>
+<p>简单来讲，如上图第一层，根目录的关键数字在17-35之间，分为三个数据块，p1中所有的子关键字要全部小于17，p2的子关键字区间在17-35之间，关键字按照大小排列，以及所有的叶子结点位于同一层。</p>
+<p>B-树的搜索，从根节点开始，对结点内的关键字（有序）序列进行二分查找，如果命中结束，否则进入查询关键字所属范围的儿子结点，知道所对应的耳机指针为空或已经是叶子节点。</p>
+<p>B-树的特性：<br>1.关键字集合分布在整颗树中。<br>2.任何一个关键字出现且只能出现在一个结点中。<br>3.搜索有可能在非叶子节点结束。<br>4.其搜索性能等价于在关键字全集内做一次二分查找<br>5.自动层次控制</p>
+<h3 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h3><p>在大型的数据库存储中，实现索引查找，如果采用二叉查找树，由于结点的存储数据是有限的，这里一个结点代表磁盘中的一页，每一页都会有限制，磁盘一页为磁盘最小单位（4K左右），同时，数据库索引过大时，有可能好几个G，一次性加载到内存中也是不现实的，只能逐一加载每一个磁盘页，每加载一次磁盘页就是一次I/O，I/O越低越好。</p>
+<p>根据上面的原理，我们只能减少树的深度，采取多叉树结构。也就是说，因为磁盘的操作费时费资源，如果过于频繁的多次查找势必效率低下。根据磁盘查找存取的次数往往由树的高度决定，所以，只要我们通过某种较好的树结构减少树的高度，那便能有效的减少磁盘的存取次数。</p>
+<h3 id="详细了解"><a href="#详细了解" class="headerlink" title="详细了解"></a>详细了解</h3><table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关键字</td>
+<td>一个结点中，值得数量</td>
+</tr>
+<tr>
+<td>子女</td>
+<td>当前结点，下又多少个下层结点</td>
+</tr>
+<tr>
+<td>内结点</td>
+<td>当前结点的子结点</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>一个结点内有x个关键字，那么x将会有x+1个子女，如下所示，含2个关键字DH的内结点有三个子女，而含有3个关键字的QTX的内结点有4个子女。子女结点数根据父结点中的值得来的。</p>
+</blockquote>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p5" alt="ac2fb39f5c838c8117c0c0afdf9cc3b9.jpeg"></p>
+<h4 id="B-树介绍"><a href="#B-树介绍" class="headerlink" title="B-树介绍"></a>B-树介绍</h4><p>B-树其实就是我们平时说的B树，除了B-树外，还有另外一种叫B+树，B-树是一种平衡的多路查找树，B-树的结构有如下的特点：一颗度为M的B-树成为m阶B-树，一个结点有k个孩子时，必有k-1个关键字才能将子树中所有关键字划分为k个子集，B-树中所有的结点的孩子结点最大值成为B-树的阶，通常用m表示，从查询效率来看，一般要求m&gt;=3。一颗m阶的b-树或者是一颗空树，或者是满足下列要求的m叉树。</p>
+<pre><code>1.树中的每个结点最多有m颗子树。
+2.若根节点不是叶子节点，则至少有两颗子树。
+3.除根节点外，所有非终端节点至少有m/2颗子树。
+4.所有的叶子节点都出现在同一层次上，并且不带信息（可以看作是外部节点或者查找失败的结点，实际上这些结点不存在，指向这些结点的指针为空）。
+</code></pre><h5 id="B-树基本介绍-查找介绍"><a href="#B-树基本介绍-查找介绍" class="headerlink" title="B-树基本介绍-查找介绍"></a>B-树基本介绍-查找介绍</h5><p>从一个例子来看：</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p6" alt="0db78242def5852b0b2f60b65923db89.jpeg"></p>
+<p>上图是一个4阶的b树，现在我们看一下查找45这个数是否在b-树中。</p>
+<pre><code>1.从根节点出发，发现根节点a有一个关键字为35，其中45&gt;35，往右子树走，进入节点c
+2.发现结点c有两个关键字，其中43&lt;45&lt;78，所以进入结点g
+3.发现结点g有三个关键字，其中3&lt;45&lt;47，所以继续往下走，发现进入了结束符结点：F，所以45不在B-树中
+</code></pre><p>我们从上述的查找的过程可以看出：</p>
+<pre><code>在B-树中查找结点
+在节点中查找关键字
+</code></pre><p>由于B-树通常存储在磁盘上，则前一查找操作实在磁盘上进行的，而拿到结点信息之后（也就是后一查找操作）是在内存中进行的，即在磁盘上找到指针p所指结束后，先将结点中的信息读入内存，然后在利用顺序查找或折半查找查询等于k的关键字。显然，在磁盘上进行一次查找比在内存中进行一次查找的时间消耗的多得多。</p>
+<p>因此，在磁盘上进行查找的次数、即待查找关键字所在结点在B-树上的层次树，是决定B树查找效率的首要因素，对于有n个关键字的m阶b树，从根结点到关键字所在结点的路径上路过的结点不超过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// m/2的多少次方为(n+1)/2 + 1;</span><br><span class="line">(m/2)^x = (n+1)/2 + 1;</span><br></pre></td></tr></table></figure>
+<h5 id="B-树-的插入"><a href="#B-树-的插入" class="headerlink" title="B-树 的插入"></a>B-树 的插入</h5><p>分为如下步骤：</p>
+<ol>
+<li>使用之前介绍的查找算法查找出关键字的插入位置，如果我们在B-树中查找到了关键字，则直接返回。否则它一定会失败在某个最底层的终端结点上。<br>2.然后，我就需要判断那个终端结点上的关键字数量是否满足：n&lt;=m-1,如果满足的话，就直接在该终端结点上添加一个关键字，否则我们就需要产生结点的“分裂”。<br>  分裂的方法是：生成一新结点。把原结点上的关键字和k（需要插入的值）按升序排序后，从中间位置把关键字（不包括中间位置的关键字）分成两部分。左部分所含关键字放在旧结点中，右部分所含关键字放在新结点中，中间位置的关键字连同新结点的存储位置插入到父结点中。如果父结点的关键字个数也超过（m-1），则要再分裂，再往上插。直至这个过程传到根结点为止。</li>
+</ol>
+<h6 id="插入流程"><a href="#插入流程" class="headerlink" title="插入流程"></a>插入流程</h6><p>首先假设这个B树的阶为3，树初始化时如下：</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p7" alt="196ff935718c38d1933a79345ffad1ac.jpeg"></p>
+<p>我们需要插入一个关键字：30这个k，可以得到结果：</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p8" alt="ad4b5504dab0a5c4673dec39ed7b13d6.jpeg"></p>
+<p>在插入26，得到如下结果</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p9" alt="2e8f0e764916f00a06d9dc16b7406374.jpeg"></p>
+<p>此时，在插入的终端中，它的关键字已经超过了 m-1=2，所以我们需要对结点进行分裂，我们先在结点内对关键字进行排序，得到26，30，37，所以他的左部分为26，中间值30，右部37，左部放在原来的结点，右部放入新的结点，而中间值则插入到父节点，并且父节点会产生一个新的指针，指向新的结点位置。</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p10" alt="6a7abb3e9a96559dbc17a2a2021049ec.jpeg"></p>
+<p>ok，我们继续插入新的关键字：85，得到如下图结果</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p11" alt="5c8a1987c8ba39f6a1c6ae2d3d68a166.png"></p>
+<p>正如图所示，我需要对刚才插入的那个结点进行“分裂”操作，操作方式和之前的一样，得到的结果如下：</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p12" alt="cc9be75c160e47f66c282d8e7738ddd9.png"></p>
+<p>哦，当我们分裂完后，突然发现之前的那个结点的父亲结点的度为4了，说明它的关键字数超过了m-1，所以需要对其父结点进行“分裂”操作，得到如下的结果：</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p13" alt="7b3fc0a87691da1789024d4af9bc8621.png"></p>
+<p>好，我们继续插入一个新的关键字：7，得到如下结果：</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p14" alt="181963e4f83d965597d6a9ffe90a7983.png"></p>
+<p>同样，需要对新的结点进行分裂操作，得到如下的结果：</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p15" alt="be07c4a9ec2801db474656b7a5c52e04.png"></p>
+<p>到了这里，我就需要继续对我们的父亲结点进行分裂操作，因为它的关键字数超过了：m-1.</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p16" alt="deb9055ef11619c2ad1518d4c0a90c6d.png"></p>
+<p>哦，终于遇到这种情况了，我们的根结点出现了关键子数量超过m-1的情况了，这个时候我们需要对父亲结点进行分列操作，但是根结点没父亲啊，所以我们需要重新创建根结点了。</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p17" alt="890d75cb355847d17b53d5a99dfe3ecd.png"></p>
+<h2 id="B-树-1"><a href="#B-树-1" class="headerlink" title="B+树"></a>B+树</h2><p>一个m阶的B+树有如下特点：<br>1.有k个子树的中间结点包含有k个元素（B树是k-1个元素），每一个元素不保存数据，只用来做索引，所有数据都保存在叶子节点。<br>2.所有的叶子结点都包含了全部元素信息，以及指向这些元素记录的指针，且叶子结点本身依靠关键字的大小自小而大顺序链接。<br>3.所有的中间结点元素都同时存在于子结点中，在子节点元素是最大或最小的元素。</p>
+<p>一个B+树：</p>
+<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p19" alt="b9ffabe31dd4efc9ec517cc92db77f76.png"></p>
+<p>1.每一个父节点的元素都出现在子节点中，是子节点的最大（或最小）元素。<br>2.根节点的最大元素，也就等于整个B+树的最大元素。以后无论插入删除多少元素，始终要保持最大元素在根节点当中。<br>3.所有叶子节点包含了元素的全部信息。<br>4.每一个叶子节点都带有指向下一个节点的指针，形成了一个有序链表。<br><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p20" alt="23a5c0bc55adb33d2b3771f3229c910b.png"></p>
+<p>5.B+树支持范围查询，大大减少I/O</p>
+<p>B+树的优势：</p>
+<p>1.单一节点存储更多的元素，使得查询的IO次数更少。<br>2.所有查询都要查找到叶子的节点，查询性能稳定。<br>3.所有叶子节点形成有序链表，便于范围查询。</p>
+<h3 id="基于主键索引和普通索引查询有什么区别？"><a href="#基于主键索引和普通索引查询有什么区别？" class="headerlink" title="基于主键索引和普通索引查询有什么区别？"></a>基于主键索引和普通索引查询有什么区别？</h3><p>首先了解，主键索引中存储整行信息，二级索引存储主键ID，如果基于主键索引，则只需要搜索ID这颗B+树；如果是普通索引查询方式，则需要先搜索索引树拿到ID，再一次回表操作，去ID索引树中在搜索一次。也就是说基于非主键索引的查询需要多扫描一颗索引树，因此我们应该在应用中尽量使用主键查询。</p>
+<h2 id="索引维护"><a href="#索引维护" class="headerlink" title="索引维护"></a>索引维护</h2><p>如果使用InnoDB，主键索引必须自增且不为空，主键为空且自增不可修改，这里解释一下为什么？</p>
+<p>B+树为了维护索引有序性，再插入新值时需要作出必要的维护。如果数据库表中最后Id为699，新插入的行为700，则只需要按照索引顺序尾部添加一个新记录，如果添加id为400的记录，就比较麻烦了，需要逻辑上挪动后面的数据，空出位置。</p>
+<p>如果当前索引页面已经满了，根据B+树的算法，这时候需要申请一个新的数据页，然后挪动部分数据过去，这个过程称为页分裂。性能自然受到影响。</p>
+<p><b>假如你的表中确实有一个唯一字段，如身份证号字符串，那应该是用身份证号做主键还是用自增字段做主键呢？<b></b></b></p>
+<p>由于每个非主键索引的叶子节点上都是主键的值，如果用身份证号做主键，那么每一个二级索引的叶子节点占用约20字节，而如果用整形做主键，则只需要4字节。显然主键长度越小，普通索引的叶子节点就越小，普通索引占用的空间也就越小。所以从性能和存储空间方面考虑，自增主键往往是更合理的选择。</p>
+<h3 id="什么场景适合业务字段直接做主键呢？"><a href="#什么场景适合业务字段直接做主键呢？" class="headerlink" title="什么场景适合业务字段直接做主键呢？"></a>什么场景适合业务字段直接做主键呢？</h3><p>业务场景如下：</p>
+<pre><code>1.只有一个索引
+2.该索引是唯一索引
+</code></pre><p>典型的key =&gt; val场景。由于没有其他索引，所以也不用考虑其他索引的叶子节点大小的问题。<br>这时候我们就要优先考虑上一段提到的“尽量使用主键查询”原则，直接将这个索引设置为主键，可以避免每次查询都要搜索两颗树。</p>
+<h2 id="复合索引-amp-覆盖索引"><a href="#复合索引-amp-覆盖索引" class="headerlink" title="复合索引 &amp; 覆盖索引"></a>复合索引 &amp; 覆盖索引</h2><p>什么是覆盖索引？</p>
+<p>由于覆盖索引可以减少树的搜索次数，显著提升查询性能，所以使用覆盖索引是一个常用的性能优化手段。</p>
+<p>什么是回表？</p>
+<p>回到主键索引树搜索的阔成，我们称之为回表。</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : 527 <br>
+        
+        原文链接 : <a href="">https://www.im527.cn/2019/08/15/索引常见模型/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share" style="margin-top: -2rem" data-wechat-qrcode-title="<p>微信扫一扫</p>" data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>" data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter">
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async></script>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>交钱再走</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫, 向我投食">
+        <p class="qrcode-meta">微信扫一扫, 向我投食</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫, 向我投食">
+        <p class="qrcode-meta">支付宝扫一扫, 向我投食</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2019/08/08/PHP-魔术方法/" target="_self">PHP 魔术方法</a>
+      </div>
+    
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz",
+      appKey: "WaR7nrzhliHj9aVwdQzkdlGd",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz", "WaR7nrzhliHj9aVwdQzkdlGd");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2019, 1, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>
