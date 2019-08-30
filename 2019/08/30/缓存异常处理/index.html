@@ -8,7 +8,7 @@
   
   
   
-  <title>解释SQL注入、XSS、CSRF | 大鲨鱼的博客</title>
+  <title>缓存异常处理 | 大鲨鱼的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -191,7 +191,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>解释SQL注入、XSS、CSRF</span>
+    <span>缓存异常处理</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -201,7 +201,7 @@
     
     
       <span>
-        浏览 : <span class="article-timer" data-identity="解释SQL注入、XSS、CSRF"></span>
+        浏览 : <span class="article-timer" data-identity="缓存异常处理"></span>
       </span>
     
   </div>
@@ -210,25 +210,25 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h1 id="SQL注入、XSS、CSRF"><a href="#SQL注入、XSS、CSRF" class="headerlink" title="SQL注入、XSS、CSRF"></a>SQL注入、XSS、CSRF</h1><h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>跨站脚本攻击（cross Site Scripting），恶意攻击者往web页面里插入恶意的Script代码，当用户浏览该页面之时，嵌入其中web里面的script代码会被执行，从而达到恶意攻击用户的目的。</p>
-<p>XSS主要有如下三种分类：</p>
-<p>1.Reflected XSS（基于反射的XSS攻击）：是指XSS代码在请求的url中，而后提交到服务器，服务器解析后，xss代码随着响应内容一起传给客户端进行解析执行（直接反射显示在页面）。<br>2.Stored XSS（基于存储的xss攻击）：Stored XSS 和 Reflected XSS的差别就在于，具有攻击性的脚本被保存到了服务器端（数据库、内存、文件系统）并且可以被普通用户完整的从服务取得并执行，从而获得了在网络上传播的能力。<br>3.DOM-based or local XSS（基于DOM或本地的XSS攻击：DOM型XSS其实是一种特殊类型的反射型XSS，它是基于DOM文档对象模型的一种漏洞。可以通过DOM来动态修改页面内容，从客户端获取DOM中的数据并在本地执行。基于这个特性，就可以利用JS脚本来实现XSS漏洞的利用。</p>
-<p>举个xss例子：</p>
-<p>（1）在网页input或者textarea中输入<script>alert(111)<script>或其他脚本。<br>（2）直接使用url参数攻击：<a href="https://www.baidu.com?jarttoTest=">https://www.baidu.com?jarttoTest=</a><script>alert(document.cookie)</script></p>
-<p>XSS不光可以在后端进行防御，也可以在前端进行防御。</p>
-<p>可以使用 php函数 htmlspecialchars()进行将脚本符号实体化。</p>
-<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><p>跨站请求伪造（csrf) Cross-site request forgery，和XSS有些相似，都是属于跨站攻击-不攻击服务器端而攻击正常访问网站的用户，但它们的攻击类型是不同维度上的分类。CSRF顾名思义，是伪造请求，冒充用户在站内的正常操作。我们知道，绝大多数网站是通过cookie等方式辨别用户身份（包括使用服务端Session的网站，因为Session ID 也是大多保存在cookie里面的），在予以授权的。所以要伪造用户的正常操作，最好的方法是通过XSS或链接欺骗等途径，让用户在本机（即拥有身份的cookie的浏览器端）起用户所不知道的请求。</p>
-<p>举个csrf例子：</p>
-<p>银行A，它以GET请求来完成银行转账操作：</p>
-<pre><code>http://www.mybank.com/Transfer.php?toBankId=11&amp;money=1000
-</code></pre><p>危险网站B，它里面有一段html代码如下：</p>
-<pre><code>&lt;img src=http://www.mybank.com/Transfer.php?toBankId=11&amp;money=1000&gt;
-</code></pre><p>首先，你登录了银行网站 A ，然后访问危险网站 B ，噢，这时你会发现你的银行账户少了 1000 块…</p>
-<h3 id="CSRF漏洞如何防御？"><a href="#CSRF漏洞如何防御？" class="headerlink" title="CSRF漏洞如何防御？"></a>CSRF漏洞如何防御？</h3><p>1.验证HTTP Referer 字段，利用http头中的referer判断请求来源是否合法，referer记录了该http请求的来源地址。</p>
-<p>简单易行，只需要在最后给所有安全敏感的请求统一增加一个拦截器来检查Referer的值就可以。特别是对于当前现有的系统，不需要改变当前系统的任何已有代码和逻辑，没有风险，非常便捷。但是有一个缺陷，低版本浏览器提供的Referer存在伪造的风险。</p>
-<p>2.在请求地址中添加token并验证</p>
-<p>CSRF之所以可以能够成功，是因为黑客可以完全伪造用户的请求，该请求中所有的用户信息都存在与cookie中，因此黑客可以在不知道这些验证信息的情况下直接利用用户自己的cookie来通过安全验证。我们可以设置一个token，然后在服务端先验证token，如果请求中没有token或者token内容不正确，则认为可能是CSRF攻击而拒绝该请求。</p>
-<h3 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h3><p>表单输入不合法的mysql语句，达到破解如密码这种操作，可以利用占位符进行防止这种信息。</p>
+      <h1 id="缓存异常处理"><a href="#缓存异常处理" class="headerlink" title="缓存异常处理"></a>缓存异常处理</h1><h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p>由于原有缓存失效，新缓存未设置成功期间（例如我们设置缓存时采用了相同的过期时间，在同一时刻出现大面积缓存过期），所有原本应该访问缓存的请求都去查询数据库了，而对数据库CPU和内存造成巨大压力，严重会造成数据库宕机，从而形成一系列连锁反应，造成整个系统崩溃。</p>
+<p>缓存失效时的雪崩效应对底层系统的冲击非常可怕，大多数系统设计者考虑加锁或者队列的方式保证来不会有大量的线程对数据库一次性进行读写，从而避免失效时大量的并发请求落到底层存储系统上。还有一个简单的方案就是讲缓存失效时间分散开，比如我们可以再原有的失效时间基础上增加一个随机值，比如1-5分钟随机，这样每一个缓存的过期时间的重复率就会降低，就很难引发集体失效的事件。</p>
+<h3 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h3><p>1.设置随机过期事件，使缓存很难再同一时间集体过期。<br>2.做二级缓存，或者双缓存策略，A1位原始缓存，A2为拷贝缓存，A1失效时，可以访问A2，A1缓存失效时间设置为短期，A2设置为长期。</p>
+<h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p>缓存穿透是指用户查询数据，在数据库没有，自然在缓存中也不会有。这样就导致用户查询的时候，在缓存中找不到，每次都要去数据库在查询一次，然后返回空（相当于做了两次无用的查询）。这样请求就绕过缓存直接查数据库，这也是经常提的缓存命中率的问题。</p>
+<h3 id="解决方式-1"><a href="#解决方式-1" class="headerlink" title="解决方式"></a>解决方式</h3><h4 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h4><p>将所有可能存在的数据哈希到一个足够大的bitmap中，一个一定不存在的数据会被这个bitmap拦截掉，从而避免了对底层存储系统的查询压力。</p>
+<h4 id="对空结果缓存"><a href="#对空结果缓存" class="headerlink" title="对空结果缓存"></a>对空结果缓存</h4><p>一个更为简单粗暴的方法，如果一个查询返回的数据为空（不管是数据不存在，还是系统故障），我们仍然把这个空结果进行缓存，但他的过期事件会很短，最长不超过5分钟，通过这个直接设置的默认值存放到缓存，这样第二次到缓冲中获取就有值了，而不会继续访问数据库，这种办法最简单粗暴，把结果缓存起来，这样下次访问同样的值直接返回空，既可以避免当查询的值为空时引起的缓存穿透，同时也可以单独设置个缓存区域存储空值，对要查询的key预先校验，然后在放行给后面的正常缓存处理逻辑。</p>
+<h3 id="缓存预热"><a href="#缓存预热" class="headerlink" title="缓存预热"></a>缓存预热</h3><p>缓存预热就是系统上线后，将相关的缓存数据直接加载到缓存系统，这样就可以避免在用户请求的时候，先查询数据库，然后再将数据缓存的问题，用户直接查询事先被预热的缓存数据。</p>
+<p>1.直接写一个缓存刷新页面，上线时手工操作一下。<br>2.数据量不大，可以在项目启动的时候自动进行加载。<br>3.定时刷新缓存。</p>
+<h3 id="缓存更新"><a href="#缓存更新" class="headerlink" title="缓存更新"></a>缓存更新</h3><p>1.定时去清理过期的缓存<br>2.当有用户请求过来时，在判断这个请求所用到的缓存是否过期，过期的话就去底层系统得到新数据并更新缓存。</p>
+<h3 id="缓存降级"><a href="#缓存降级" class="headerlink" title="缓存降级"></a>缓存降级</h3><p>当访问量剧增、服务出现问题（如响应时间慢或不响应）或非核心服务影响到核心流程的性能时，仍然需要保证服务还是可用的，即使是有损服务。系统可以根据一些关键数据进行自动降级，也可以配置开关实现人工降级。</p>
+<h4 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h4><p>降级的最终目的是保证核心服务可用，即使是有损的，而且有些服务是无法降级的（如购物车、结算）。在进行降级之前要对系统进行梳理，看看系统是不是可以丢卒保帅，从而梳理出那些必须誓死保护，哪些可以降级，比如可以参考日志级别设置预案。</p>
+<pre><code>1.一般：比如有些服务偶尔因为网络抖动或者服务正在上线而超时，可以自动降级。
+2.警告：有些服务在一段时间内成功率有波动，可以自动降级或者人工降级，并发送警告。
+3.错误：比如可用率低于90%，或者数据库连接池被打爆了，或者访问量突然猛增到系统承受的最大阈值，此时可以根据情况自动降级或者人工降级。
+4.严重错误：比如因为特殊原因数据错误了，此时需要紧急人工降级。
+</code></pre><h4 id="删除策略"><a href="#删除策略" class="headerlink" title="删除策略"></a>删除策略</h4><p>Redis服务器使用惰性删除和定期删除两种方式，通过配合使用两种策略，服务器可以很好的合理的使用CPU和避免内存空间之间取得平衡。</p>
+<h5 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h5><p>在设置键的过期时间的同时，创建一个定时器，让定时器在键的过期时间来立即执行对键的删除操作。</p>
+<h5 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h5><p>放任键过期不管，但是每次从键空间获取键时，都能检测获取的键是否过期，如果过期的话，就删除该键，如果没有过期，就返回该键。</p>
+<h5 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h5><p>每隔一段时间，程序就对数据库进行一次查询，删除里面过期的键。</p>
 
     </div>
   </div>
@@ -240,7 +240,7 @@
         
           本文作者 : 527 <br>
         
-        原文链接 : <a href="">https://www.im527.cn/2019/08/30/解释SQL注入、XSS、CSRF/</a><br>
+        原文链接 : <a href="">https://www.im527.cn/2019/08/30/缓存异常处理/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -317,15 +317,9 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2019/08/20/计算机网络体系结构介绍/" target="_self">计算机网络体系结构介绍</a>
+        <a href="/2019/08/30/解释SQL注入、XSS、CSRF/" target="_self">解释SQL注入、XSS、CSRF</a>
       </div>
     
-    
-      <div class="nav-next">
-        下一篇:
-        <a href="/2019/08/30/缓存异常处理/" target="_self">缓存异常处理</a>
-        <i class="iconfont icon-next"></i>
-      </div>
     
   </nav>
 
