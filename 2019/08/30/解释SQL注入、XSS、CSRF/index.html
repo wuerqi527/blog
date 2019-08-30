@@ -8,7 +8,7 @@
   
   
   
-  <title>计算机网络体系结构介绍 | 大鲨鱼的博客</title>
+  <title>解释SQL注入、XSS、CSRF | 大鲨鱼的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -191,17 +191,17 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>计算机网络体系结构介绍</span>
+    <span>解释SQL注入、XSS、CSRF</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2019-08-20
+      2019-08-30
     </span>
     
     
       <span>
-        浏览 : <span class="article-timer" data-identity="计算机网络体系结构介绍"></span>
+        浏览 : <span class="article-timer" data-identity="解释SQL注入、XSS、CSRF"></span>
       </span>
     
   </div>
@@ -210,227 +210,25 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h1 id="计算机网络体系结构"><a href="#计算机网络体系结构" class="headerlink" title="计算机网络体系结构"></a>计算机网络体系结构</h1><h2 id="结构介绍"><a href="#结构介绍" class="headerlink" title="结构介绍"></a>结构介绍</h2><p>计算机网络体系结构分为3种，分别是：OSI体系结构、TCP/IP体系结构、五层体系结构，其中OSI七层体系结构概念清晰、理念完整，但是比较复杂且不实用，TCP/IP体系结构包含了一系列构成互联网基础的网络协议，是Internet的核心协议，被广泛应用于局域网和广域网。</p>
-<table>
-<thead>
-<tr>
-<th>OSI体系结构（7层）</th>
-<th>TCP/IP体系结构（4层）</th>
-<th>五层体系结构（5层）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>应用层</td>
-<td>应用层 （http）</td>
-<td>应用层</td>
-</tr>
-<tr>
-<td>表示层</td>
-<td>运输层（TCP、UDP）</td>
-<td>运输层</td>
-</tr>
-<tr>
-<td>会话层</td>
-<td>网际层（IP）</td>
-<td>网络层</td>
-</tr>
-<tr>
-<td>传输层</td>
-<td>网络接口层</td>
-<td>链路层</td>
-</tr>
-<tr>
-<td>网络层</td>
-<td></td>
-<td>物理层</td>
-</tr>
-<tr>
-<td>链路层</td>
-<td>·</td>
-<td></td>
-</tr>
-<tr>
-<td>物理层</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>OSI体系结构中物理层和链路层对应4层中的网络接口层，网络层对应4层中的网际层(IP)，传输层代表4层中的运输层，应用层、表示层、会话层代表4层中的应用层（http）。</p>
-<h2 id="TCP-IP4层网络体系详解"><a href="#TCP-IP4层网络体系详解" class="headerlink" title="TCP/IP4层网络体系详解"></a>TCP/IP4层网络体系详解</h2><table>
-<thead>
-<tr>
-<th>层级</th>
-<th>作用</th>
-<th>传输单位</th>
-<th>功能</th>
-<th>具体协议</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>网络接口层</td>
-<td>负责与链路（传输媒介）的数据传输工作</td>
-<td>帧</td>
-<td>组帧、差错控制、流量控制和传输管理（无论上层数据包有无丢失&amp;重复，一旦发现错误帧，则丢弃，以免浪费网络） <br> 在广播式网络通过介质访问子层，控制共享信道的访问</td>
-<td>EIA-232C\CCITT\SDLC\HDLC\PPP\STP</td>
-</tr>
-<tr>
-<td>网际层</td>
-<td>为不同主机提供通信服务：网络层的分组数据从源端传到目的端</td>
-<td>数据报</td>
-<td>封装数据成分组/包、路由选择 <br> 流量控制、拥塞控制、差错控制、网际互联</td>
-<td>IP:提供网络节点之间的报文传送服务\ARP:实现IP地址向物理地址的映射\RARP协议：实现物理地址向IP地址的映射\ICMP:探测、报告传输中产生的错误\IGMP:管理多播组测成员关系\其余:IPX、OSPF</td>
-</tr>
-<tr>
-<td>运输层</td>
-<td>为不同主机中的进程间提供通信服务</td>
-<td>报文段(TCP)/用户数据报(UDP)</td>
-<td>为端到端的连接提供可靠的传输服务，为端到端的连接提供流量控制、差错控制、数据传输管理服务</td>
-<td>TCP:面向连接、可靠的报文传输服务/UDP:提供用户间无连接、不可靠的报文传输服务</td>
-</tr>
-<tr>
-<td>应用层</td>
-<td>定义应用进程间通信和交互的规则 应用进程指：主机中的运行的程序，交互方式指：基于C/S方式，交互单元的数据单元：报文</td>
-<td></td>
-<td></td>
-<td>HTTP:INTERNET网浏览服务\DNS协议：负责域名和IP地址的映射\SMTP：邮件发送服务\FTP:应用级文件传输服务\POP:提供对邮箱服务器进行远程存取邮件的服务\Telnet:提供远程登录服务\SSH协议：提供远程登录服务</td>
-</tr>
-</tbody>
-</table>
-<h2 id="UDP和TCP的区别"><a href="#UDP和TCP的区别" class="headerlink" title="UDP和TCP的区别"></a>UDP和TCP的区别</h2><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>特点</th>
-<th>优点</th>
-<th>缺点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>UDP(user Datagram Protocol):用户数据报协议</td>
-<td>无连接：使用UDP传输前，不需要建立UDP连接 <br> 不可靠：UDP的数据报发送后，不管其是否会到达接收方 <br> 面向报文：数据以数据报文的形式传输 <br> 无拥塞控制：由于是不可靠传输，即不管是否到达接收方，故不需拥塞控制</td>
-<td>速度快</td>
-<td>消息易丢失（特别网络差的时候）</td>
-</tr>
-<tr>
-<td>TCP(Transmission Control Protocol):传输控制协议</td>
-<td>面向连接：使用TCP传输数据前，必须先建立TCP连接；传输完成后再释放连接 <br> 全双工通信：建立TCP连接后，通信双方都能发送数据 <br> 可靠：通过TCP连接传送的数据：不丢失、无差错、不重复、按序到达 <br>面向字节流：数据以流的形式进行传输</td>
-<td>数据传输可靠</td>
-<td>效率差（建立连接、发送确认包）</td>
-</tr>
-</tbody>
-</table>
-<h2 id="cookie和session的区别"><a href="#cookie和session的区别" class="headerlink" title="cookie和session的区别"></a>cookie和session的区别</h2><p>Cookie:一种客户端机制，它是用于记录下载某个网站上输入的内容，选择（下次打开同一个网站时，WEB服务器会先看看有无上次留下的Cookie资料，若有则依据Cookie里的内容来判断使用者，显示特定的网页内容），应用场景用于提供个人化服务。</p>
-<p>cookie原理：通过扩展HTTP协议实现，服务器通过在HTTP的响应头中加上一行特殊的指令以提示。</p>
-<p>cookie具体使用：主要内容包括：名字/值/过期时间/路径/域路径与域一起构成cookie的作用范围，若未设置过期时间，浏览器关闭cookie就会消失，这种cookie也被称为“会话cookie”；</p>
-<p>Session:一种服务端机制，它使用散列表的结构保存信息，当程序需为某个客户端的请求创建一个session时，服务器首先检查该客户端的请求里是否包含一个session标识（session id），若包含则把其检索出来使用，若不包含，则为此客户端创建一个session，生成一个与此session相关联的session标识（session_id），在交互过程中浏览器可以自动的按照规则吧这个标识发送给服务器，一般这个cookie的名字都是类似于SESSIONID.</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>作用域</th>
-<th>存储量</th>
-<th>安全性</th>
-<th>损耗</th>
-<th>应用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cookie</td>
-<td>客户端浏览器</td>
-<td>少，单个cookie不超过4k，浏览器限制一个站点最多保存20个cookie</td>
-<td>不安全，cookie存本地</td>
-<td>低</td>
-<td>存放设备配置信息</td>
-</tr>
-<tr>
-<td>session</td>
-<td>服务器</td>
-<td>多</td>
-<td>安全</td>
-<td>高</td>
-<td>存放重要信息</td>
-</tr>
-</tbody>
-</table>
-<h2 id="三次握手流程"><a href="#三次握手流程" class="headerlink" title="三次握手流程"></a>三次握手流程</h2><p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p22" alt="e872c5ae81b10711e493876d63e95212.png"></p>
-<p>建立TCP连接之前的三次握手</p>
-<p>1.TCP客户端，服务器都处于关闭状态<br>2.客户端主动打开连接，服务器才被动打开连接，等待接收客户端的请求</p>
-<table>
-<thead>
-<tr>
-<th>过程</th>
-<th>具体描述</th>
-<th>报文段信息</th>
-<th>状态</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一次握手</td>
-<td>客户端向服务器发送一个连接请求的报文段</td>
-<td>同步标志位设为1：SYN = 1,随机选择一个起始序号：seq=x，不携带数据（因SYN位被设置为1的报文不能携带数据，但是要消耗一个序号）</td>
-<td>客户端进入同步已发送状态（SYN_SEND）等待服务器确认</td>
-</tr>
-<tr>
-<td>第二次握手</td>
-<td>服务器收到请求连接报文后，若同意建立连接，则向客户端发起连接确认的报文段（为该TCP连接分配TCP缓存、变量）</td>
-<td>同步标志位设为1：SYN=1,确认标记为设为1：ACK=1，随机选择一个起始序号:seq=Y，确认号字段设为：ack=x+1，不携带数据（原因同上，但是需要消耗一个序号）</td>
-<td>服务器进入同步已接收状态（SYN_RCVD）</td>
-</tr>
-<tr>
-<td>第三次握手</td>
-<td>客户端收到确认报文段后，向服务器再次发出连接确认报文段（为该TCP连接分配TCP缓存、变量）</td>
-<td>确认表计位设为1：ACK=1，序号：seq=X+1，确认号字段设为：ack=y+1，可携带数据（因SYN没有设为1）</td>
-<td>客户端、服务器端进入已创建状态（可开始发送数据）</td>
-</tr>
-</tbody>
-</table>
-<p>为什么TCP建立连接需要三次握手？</p>
-<p>防止服务端因接收了早已失效的连接请求报文，从而一直等待客户端请求，最终导致形成死锁，浪费资源。</p>
-<h2 id="四次挥手流程"><a href="#四次挥手流程" class="headerlink" title="四次挥手流程"></a>四次挥手流程</h2><p>4次挥手是处于TCP客户端、服务器都处于已创建状态（ESTABLISHED），直到客户端主动关闭TCP连接</p>
-<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p23" alt="fa63207048fbddfab680a28fa24b8498.png"></p>
-<table>
-<thead>
-<tr>
-<th>过程</th>
-<th>具体描述</th>
-<th>报文段信息</th>
-<th>状态</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第一次挥手</td>
-<td>客户端向服务器发送一个连接释放的报文段（停止在发送数据）</td>
-<td>终止控制位设置为1：FIN=1,报文段序号设置前面传送数据最后一个字节的序号加1：seq=u，可携带数据（FIN=1的报文即使不携带数据也消耗1个序号）</td>
-<td>客户端进入终止等待1状态（FIN-WAIT-1）等待服务器确认</td>
-</tr>
-<tr>
-<td>第二次挥手</td>
-<td>服务器收到连接释放报文段后，则向客户端发回连接释放确认的报文段</td>
-<td>确认标记位设为1：ACK=1，报文段序号设为前面传送数据最后一个字节的序号加1：seq=v，确认号字段设为：ack=u+1</td>
-<td>服务器进入关闭等待状态（CLOSE-WAIT），客户端收到服务器的确认后，进入终止等待2状态（FIN-WAIT-2），等待服务器发出释放连接请求（至此，客户端、服务器TCP已经断开，TCP连接处于半关闭状态，即客户端对服务器断开，但是服务器还未对客户端断开）</td>
-</tr>
-<tr>
-<td>第三次挥手</td>
-<td>若服务器已无要向客户端发送数据，则发出释放连接的报文段</td>
-<td>终止控制符设为1：FIN=1，确认标记位设为1：ACK=1，报文段序号seq=w，重复上次已发送的确认号字段设为：ack=u+1，可携带数据（FIN=1的报文即使不携带数据也消耗1个序号）</td>
-<td>服务器端进入最后确认状态（LAST-ACK）</td>
-</tr>
-<tr>
-<td>第四次挥手</td>
-<td>客户端收到连接释放报文段后，则向服务器发回连接释放确认的报文段</td>
-<td>确认标记ACK=1，报文段序号：seq=U+1,确认号字段：ack=w+1，可携带数据</td>
-<td>客户端进入时间等待状态（TIME-WAIT）服务器进入关闭状态（CLOSED），此时TCP连接还未释放，需要经过等待时间计时器设置的时间2MSL后，客户端才进入关闭连接的状态（CLOSED），即服务器进入关闭状态比客户端早些</td>
-</tr>
-</tbody>
-</table>
-<p>为什么TCP释放连接需要4次挥手？</p>
-<p>为了保证双方都能通知到对方，需要释放断开连接。</p>
+      <h1 id="SQL注入、XSS、CSRF"><a href="#SQL注入、XSS、CSRF" class="headerlink" title="SQL注入、XSS、CSRF"></a>SQL注入、XSS、CSRF</h1><h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>跨站脚本攻击（cross Site Scripting），恶意攻击者往web页面里插入恶意的Script代码，当用户浏览该页面之时，嵌入其中web里面的script代码会被执行，从而达到恶意攻击用户的目的。</p>
+<p>XSS主要有如下三种分类：</p>
+<p>1.Reflected XSS（基于反射的XSS攻击）：是指XSS代码在请求的url中，而后提交到服务器，服务器解析后，xss代码随着响应内容一起传给客户端进行解析执行（直接反射显示在页面）。<br>2.Stored XSS（基于存储的xss攻击）：Stored XSS 和 Reflected XSS的差别就在于，具有攻击性的脚本被保存到了服务器端（数据库、内存、文件系统）并且可以被普通用户完整的从服务取得并执行，从而获得了在网络上传播的能力。<br>3.DOM-based or local XSS（基于DOM或本地的XSS攻击：DOM型XSS其实是一种特殊类型的反射型XSS，它是基于DOM文档对象模型的一种漏洞。可以通过DOM来动态修改页面内容，从客户端获取DOM中的数据并在本地执行。基于这个特性，就可以利用JS脚本来实现XSS漏洞的利用。</p>
+<p>举个xss例子：</p>
+<p>（1）在网页input或者textarea中输入<script>alert(111)<script>或其他脚本。<br>（2）直接使用url参数攻击：<a href="https://www.baidu.com?jarttoTest=">https://www.baidu.com?jarttoTest=</a><script>alert(document.cookie)</script></p>
+<p>XSS不光可以在后端进行防御，也可以在前端进行防御。</p>
+<p>可以使用 php函数 htmlspecialchars()进行将脚本符号实体化。</p>
+<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><p>跨站请求伪造（csrf) Cross-site request forgery，和XSS有些相似，都是属于跨站攻击-不攻击服务器端而攻击正常访问网站的用户，但它们的攻击类型是不同维度上的分类。CSRF顾名思义，是伪造请求，冒充用户在站内的正常操作。我们知道，绝大多数网站是通过cookie等方式辨别用户身份（包括使用服务端Session的网站，因为Session ID 也是大多保存在cookie里面的），在予以授权的。所以要伪造用户的正常操作，最好的方法是通过XSS或链接欺骗等途径，让用户在本机（即拥有身份的cookie的浏览器端）起用户所不知道的请求。</p>
+<p>举个csrf例子：</p>
+<p>银行A，它以GET请求来完成银行转账操作：</p>
+<pre><code>http://www.mybank.com/Transfer.php?toBankId=11&amp;money=1000
+</code></pre><p>危险网站B，它里面有一段html代码如下：</p>
+<pre><code>&lt;img src=http://www.mybank.com/Transfer.php?toBankId=11&amp;money=1000&gt;
+</code></pre><p>首先，你登录了银行网站 A ，然后访问危险网站 B ，噢，这时你会发现你的银行账户少了 1000 块…</p>
+<h3 id="CSRF漏洞如何防御？"><a href="#CSRF漏洞如何防御？" class="headerlink" title="CSRF漏洞如何防御？"></a>CSRF漏洞如何防御？</h3><p>1.验证HTTP Referer 字段，利用http头中的referer判断请求来源是否合法，referer记录了该http请求的来源地址。</p>
+<p>简单易行，只需要在最后给所有安全敏感的请求统一增加一个拦截器来检查Referer的值就可以。特别是对于当前现有的系统，不需要改变当前系统的任何已有代码和逻辑，没有风险，非常便捷。但是有一个缺陷，低版本浏览器提供的Referer存在伪造的风险。</p>
+<p>2.在请求地址中添加token并验证</p>
+<p>CSRF之所以可以能够成功，是因为黑客可以完全伪造用户的请求，该请求中所有的用户信息都存在与cookie中，因此黑客可以在不知道这些验证信息的情况下直接利用用户自己的cookie来通过安全验证。我们可以设置一个token，然后在服务端先验证token，如果请求中没有token或者token内容不正确，则认为可能是CSRF攻击而拒绝该请求。</p>
+<h3 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h3><p>表单输入不合法的mysql语句，达到破解如密码这种操作，可以利用占位符进行防止这种信息。</p>
 
     </div>
   </div>
@@ -442,7 +240,7 @@
         
           本文作者 : 527 <br>
         
-        原文链接 : <a href="">https://www.im527.cn/2019/08/20/计算机网络体系结构介绍/</a><br>
+        原文链接 : <a href="">https://www.im527.cn/2019/08/30/解释SQL注入、XSS、CSRF/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -519,15 +317,9 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2019/08/19/php设计模式总结篇/" target="_self">php设计模式总结篇</a>
+        <a href="/2019/08/20/计算机网络体系结构介绍/" target="_self">计算机网络体系结构介绍</a>
       </div>
     
-    
-      <div class="nav-next">
-        下一篇:
-        <a href="/2019/08/30/解释SQL注入、XSS、CSRF/" target="_self">解释SQL注入、XSS、CSRF</a>
-        <i class="iconfont icon-next"></i>
-      </div>
     
   </nav>
 
