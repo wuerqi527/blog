@@ -8,12 +8,12 @@
   
   
   
-  <title>CGI、FastCGI、php-fpm的区别 | 大鲨鱼的博客</title>
+  <title>javascript正则表达式基础知识 | 大鲨鱼的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="PHP,课外阅读,">
+    <meta name="keywords" content="Hexo, theme-bmw">
   
 
   <script>
@@ -191,24 +191,17 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>CGI、FastCGI、php-fpm的区别</span>
+    <span>javascript正则表达式基础知识</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2019-08-30
+      2019-10-25
     </span>
     
-      <span>
-        分类 : 
-          <a href="/categories/PHP/">
-            PHP
-          </a>
-      </span>
-    
     
       <span>
-        浏览 : <span class="article-timer" data-identity="CGI、FastCGI、php-fpm的区别"></span>
+        浏览 : <span class="article-timer" data-identity="javascript正则表达式基础知识"></span>
       </span>
     
   </div>
@@ -217,34 +210,119 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h1 id="CGI技术"><a href="#CGI技术" class="headerlink" title="CGI技术"></a>CGI技术</h1><h2 id="什么是CGI？"><a href="#什么是CGI？" class="headerlink" title="什么是CGI？"></a>什么是CGI？</h2><p>cgi（common gateway interface）公共网关接口是www技术中最重要的技术之一，有着不可替代的重要地位。CGI是外部应用程序（CGI程序）与Web服务器之间的接口标准，是在CGI程序和Web服务器之间传递信息的规范。CGI规范允许WEB服务器执行外部程序，并把它们的输出发送给WEB浏览器，CGI将WEB的一组简单的静态超媒体文档变成一个完整的新的交互式媒体。通俗的讲CGI就像是一座桥，把网页和WEB服务器中的执行程序连接起来，它把HTML接受的指令传递给服务器的执行程序，再把服务器执行程序的结果返还给HTML页。CGI程序使网页具有交互功能，但需跟Web服务在同一台主机上面运行，不能够夸主机通信。CGI的跨平台性能极佳，几乎可以在任何操作系统上实现。</p>
-<p><code>cgi之所以称为通用网关接口，主要特点就在于CGI程序可以是python脚本，PERL脚本，SHELL脚本，C或者C++程序等。</code></p>
-<p>举个例子：现在的个人主页上大部分都有一个留言本，留言本的工作是这样的：先由用户在客户端输入一些信息，如名字之类的东西，接着用户按一下“留言”，浏览器把这些信息传送到服务器的CGI目录下特定的CGI程序中，于是CGI程序在服务器上按照预定的方法进行处理。在本例中就是把用户提交的信息存入指定的文件中，然后CGI程序给客户点发送一个信息，表示请求的任务已经结束，此时用户在浏览器里将看到“留言结束”的字样，整个过程结束。大致工作流程如下:</p>
-<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p24" alt="e179f00c173ed812ae314a1d7923da7c.png"></p>
-<p>通俗解释：</p>
-<pre><code>1.客户端发出请求
-2.httpd无法识别所有请求的资源，交给内核处理
-3.内核发现请求的资源是脚本文件，便道磁盘查找
-4.内核找到所请求的脚本文件并读取
-5.内核将所读取的脚本文件返回给httpd
-6.httpd基于CGI调用解释器执行此脚本
-7.解释器将执行结果返回给httpd
-8.httpd将结果返回给客户端
-</code></pre><p>CGI模式在处理用户请求时：</p>
-<p>1.每当客户请求CGI程序的时候，WEB服务器就请求操作系统生成一个新的CGI解释器进程，CGI的一个进程则处理完一个请求后退出，下一个请求来时再创建新进程，这也是CGI最为人诟病的fork and execute模式。<br>2.CGI方式的服务器上有多少请求就会有多少CGI子进程，每个子进程都需要启动CGI解释器，加载配置等初始化操作，这也是CGI性能低下的主要原因，当用户请求稍微一多，会大量挤占系统资源，如内存、CPU等。</p>
-<h2 id="fastCGI"><a href="#fastCGI" class="headerlink" title="fastCGI"></a>fastCGI</h2><p>fastCGI是从CGI发展改进而来的，属于CGI协议的一个分支，也是一个标准协议。它的核心思想就是在web服务器和具体cgi程序志坚建立一个智能的可持续的中间件，统管CGI程序的运行。</p>
-<p>FastCGI是语言无关的、可伸缩架构的CGI开放扩展，其主要行为是将CGI解释器进程保持在内存中并因此获得较高的性能。众所周知，CGI解释器的反复加载是CGI性能低下的主要原因，如果CGI解释器保持在内存中并接受FastCGI进程管理器调度，则可以提供良好的性能、伸缩性、Fail-over特性等等。当WEB服务器将请求提交给这个层，这个层再派生出几个可复用的CGI程序实例，然后再把请求分发给这些实例。这些实例是可控的、可持续的、可复用的，因此一方面避免了进程反复fork，另一方面又可以通过中间层的控制和探测机制来监视这些实例的运行情况，根据不同的状况fork或者回收实例，达到灵活性和稳定性兼得的目的。</p>
-<p>fastCGI接口方式采用C/S结构，可以将HTTP服务器和脚本解析服务器分开，同时在脚本解析服务器上启动一个或者多个脚本解析守护进程。当HTTP服务器每次遇到动态程序时，可以将其直接交付给fastCGI进程来执行，然后将得到的结果返回给浏览器。这种方式可以让HTTP服务器专一的处理静态请求或者将动态脚本服务器的结果返回给客户端，这在很大程度上提高了整个应用系统的性能。</p>
-<p><img src="evernotecid://97B7F980-EEA6-450E-9DB2-7274368BD5A4/appyinxiangcom/25866274/ENResource/p25" alt="c33d6b6caef053ffa398bb5a237d38fe.png"></p>
-<h3 id="fastcgi工作流程"><a href="#fastcgi工作流程" class="headerlink" title="fastcgi工作流程"></a>fastcgi工作流程</h3><pre><code>1.web服务器启动时载入fastcgi进程管理器（IIS ISAPI 或 Apache Module 或nginx fastcgi）。
-2.fastcgi进程管理器自身初始化，启动多个cgi解释器进程（如果使用php-fpm管理器可见多个php-fpm进程）并等待来自web服务器的连接。
-3.当客户端请求到达web服务器时，web fastcgi进程管理器选择并通过socket连接到一个CGI解释器，web服务器将cgi环境变量和标准输入发送到fastcgi子进程php-fpm进程。
-4.fastcgi子进程完成处理后将标准输入和错误信息从同一socket连接返回web服务器，当fastcgi子进程关闭连接，请求便告知处理完成。fastcgi子进程接着等待并处理来自fastcgi进程管理器的下一个连接，而在cgi模式中，php-cgi进程在此便退出了。
-</code></pre><p>上述情况中，可以想象cgi通常有多慢，每一个web请求php都必须重新解析php.ini。重新载入全部扩展并重新初始化全部数据结构。使用fastcgi，所有这些都只在进程启动时发生一次，一个额外的好处是，持续数据库连接可以工作。</p>
-<h2 id="php-fpm"><a href="#php-fpm" class="headerlink" title="php-fpm"></a>php-fpm</h2><p>PHP-FPM(php fastcgi process Manager)：php fastcgi 进程管理器，用于管理php进程池软件，用于接收web服务器的请求。php-fpm提供了更好地php进程管理方式，可以有效的控制内存和进程、可以平滑重载php配置。</p>
-<p>它是php提供给web server也就是http前端服务器的fastcgi协议接口程序，它不会像php-cgi一样每一次连接都会重新开启一个进程，处理完请求又关闭这个进程，而是允许一个进程对多个连接进行处理，而不会立即关闭这个进程，接着处理下一个连接，它可以说是php-cgi的一个管理程序，是对php-cgi的改进。</p>
-<p>php-fpm会开启多个php-cgi程序，并且php-fpm常驻内存，每次web serve服务发送连接过来的时候，php-fpm将连接信息分配给下面其中的一个子程序php-cgi进行处理，处理完毕这个php-cgi并不会关闭，而是继续等待下一个连接，这也是fast-cgi加速原理，但是由于php-fpm是多进程的，而一个php-cgi基本消耗7-25M内存，因此如果连接过多就会导致内存消耗过大，引发问题。</p>
-<h3 id="为什么会出现php-fpm"><a href="#为什么会出现php-fpm" class="headerlink" title="为什么会出现php-fpm"></a>为什么会出现php-fpm</h3><p>fpm的出现全部因为php-fastcgi出现，为了很好的管理php-fastcgi而实现的一个程序。php-fastcgi只是一个cgi程序，只会解析php请求，并且返回结果，不会管理。php-fastcgi出现之前是有一个php-cgi，只是他执行效率低下，才被php-fastcgi渠道。</p>
+      <h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><h2 id="修饰符了解"><a href="#修饰符了解" class="headerlink" title="修饰符了解"></a>修饰符了解</h2><h3 id="普通字符"><a href="#普通字符" class="headerlink" title="普通字符"></a>普通字符</h3><p><code>+</code>代表前面的字符至少出现一次（一次或者多次），runoo+b可以匹配runooob、runoob、runoooooob。<br><code>*</code>代表前面的字符至少出现零次（零次或者多次），runoo*b可以匹配runob、runoob、runoooob。<br><code>?</code> 代表字符可以出现零次或者一次，colou?r可以匹配color、colour。</p>
+<h3 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h3><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\f</td>
+<td>匹配换页符号</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>\b可以匹配字符的边界，也就是说它匹配的是一个位置，而不是一个真正的字符，此位置的一侧是字符，另一侧是非字符或者字符串边界（开始位置和结束位置）</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配一个字符串的起始位置</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配字母数字，等价于 [a-zA-Z0-9_]</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>匹配非字母数字</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配[0-9]</td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配非数字字符</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配空白字符， 包括空格符、制符表、回车符、换行符、垂直换行符、换页符</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>匹配非边界符</td>
+</tr>
+</tbody>
+</table>
+<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>i</td>
+<td>不区分大小写</td>
+</tr>
+<tr>
+<td>g</td>
+<td>执行全局配置</td>
+</tr>
+<tr>
+<td>m</td>
+<td>规定正则表达式可以执行多行匹配</td>
+</tr>
+</tbody>
+</table>
+<h3 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h3><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>重复前面匹配的字符1次或者多次</td>
+</tr>
+<tr>
+<td>*</td>
+<td>重复前面匹配的字符0次或者多次</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配前面匹配的字符0次或者1次 相当于{0-1}</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>可以重复前面匹配的内容n次</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>重复前一项匹配至少n次，但是最多不可以超过m次</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>匹配前一项n次或者更多次</td>
+</tr>
+<tr>
+<td>*?</td>
+<td>星号（*）是一个匹配两次，他可以重复前一个匹配0次或者多次的内容</td>
+</tr>
+</tbody>
+</table>
+<h2 id="demo用法"><a href="#demo用法" class="headerlink" title="demo用法"></a>demo用法</h2><p><em>换页符号 \f</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"we love \f antzone"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"\\f"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(str.match(reg));</span><br></pre></td></tr></table></figure>
+<p><em>边界符符号 \b</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// \b 可以匹配字符的边界，那么就需要界定一下，在此上下文中“字符”的构成。</span></span><br><span class="line"><span class="comment">// 通常情况下，正则中“字符”就是\w可以匹配的字符，于是明晰\w的匹配范围是关键。 \w 就是 [a-zA-Z0-9_]</span></span><br><span class="line"><span class="comment">// 边界符就是 /^$/最开始和结束，以及除了\w之外的，都可以匹配到</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">'antzon&lt;'</span>;</span><br><span class="line"><span class="keyword">let</span> reg = <span class="regexp">/antzon(\b)/</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str.match(reg));</span><br><span class="line"><span class="comment">// 结果</span></span><br><span class="line"><span class="string">"antzon"</span> <span class="comment">// 正则匹配成功，因为"&lt;"不在[a-zA-Z0-9_]范围内，那么"n"的右侧就是他的边界。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">'I love You'</span>;</span><br><span class="line"><span class="keyword">let</span> reg = <span class="regexp">/love(\b)/</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str.match(reg));</span><br><span class="line"><span class="comment">// 结果</span></span><br><span class="line"><span class="string">"love"</span> <span class="comment">// 因为"e"的右侧是空白内容，不在[a-zA-Z0-9_]范围之内。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> str = <span class="string">"蚂蚁部落&lt;"</span>;</span><br><span class="line"><span class="keyword">let</span> reg = <span class="regexp">/蚂蚁部落(\b)/</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str.match(reg));</span><br><span class="line"><span class="comment">// 结果 失败 \b 左侧也不是字符(\w),虽然右侧是非字符。</span></span><br></pre></td></tr></table></figure>
+<p><em>空白符 \s</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str=<span class="string">"蚂蚁部落 \n http://www.softwhy.com"</span>;</span><br><span class="line"><span class="keyword">let</span> reg=<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"\\s"</span>,<span class="string">"g"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(str.match(reg));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果</span></span><br><span class="line"><span class="comment">// " ", "回车", " "</span></span><br></pre></td></tr></table></figure>
 
     </div>
   </div>
@@ -256,7 +334,7 @@
         
           本文作者 : 527 <br>
         
-        原文链接 : <a href="">https://www.im527.cn/2019/08/30/CGI、FastCGI、php-fpm的区别/</a><br>
+        原文链接 : <a href="">https://www.im527.cn/2019/10/25/javascript正则表达式基础知识/</a><br>
         版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
         </blockquote>
       </div>
@@ -313,15 +391,6 @@
     <div class="article-meta pull-left">
       <span>
         
-          <i class="iconfont icon-06tags"></i>标签: 
-          
-          <span class="span--tag">
-            <a href="/tags/课外阅读/">
-              #课外阅读
-            </a>
-          </span>
-          
-        
       </span>
     </div>
     <div class="article-meta pull-right">
@@ -342,15 +411,9 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2019/08/30/缓存异常处理/" target="_self">缓存异常处理</a>
+        <a href="/2019/08/30/CGI、FastCGI、php-fpm的区别/" target="_self">CGI、FastCGI、php-fpm的区别</a>
       </div>
     
-    
-      <div class="nav-next">
-        下一篇:
-        <a href="/2019/10/25/javascript正则表达式基础知识/" target="_self">javascript正则表达式基础知识</a>
-        <i class="iconfont icon-next"></i>
-      </div>
     
   </nav>
 
