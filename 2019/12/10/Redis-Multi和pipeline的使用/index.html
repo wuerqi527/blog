@@ -6,11 +6,9 @@
   <meta charset="utf-8">
   <meta name="author" content="董沅鑫, yuanxin.me@gmail.com">
   
-    <meta name="robots" content="noindex">
   
   
-  
-  <title>大鲨鱼的博客</title>
+  <title>Redis-Multi和pipeline的使用 | 大鲨鱼的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -179,483 +177,155 @@
 </script>
 
       
-<div class="container home-index">
-  
-  <div class="post">
-    <h1 class="article-title">
-      <a href="/2019/07/24/APP-DEBUG源码追踪/">
-        <span>APP_DEBUG源码追踪</span>
-      </a>
-    </h1>
-    <!-- PC端文章信息 -->
-    <div class="article-top-meta pc-view">
-      <span>
-        发布时间 : 2019-07-24
-      </span>
-    </div>
-    <!-- 移动端文章信息 -->
-    <div class="article-top-meta mobile-view">
-      <span>
-        发布 : 2019-07-24
-      </span>
-      
-        <span>
-        分类 :
-          <a href="/categories/PHP/">
-            PHP
-          </a>
-        </span>
-      
-      
-        <span>
-          浏览 : <span class="article-timer" data-identity="APP-DEBUG源码追踪"></span>
-        </span>
-      
-    </div>
-    
-    <!-- 文章简介 -->
-    <div class="article-content">
-      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
-        
-      </div>
-    </div>
-    <div class="article-footer">
-      <div class="article-meta pull-left">
-        <!-- 分类pc端可见 -->
-        <span class="pc-view">
-          
-            <i class="iconfont icon-tag"></i>分类:
-            <a href="/categories/PHP/">
-              PHP
-            </a>
-          </span>
-          
-        <span>
-          
-            <i class="iconfont icon-06tags"></i>标签:
-            
-              <span class="span--tag">
-                <a href="/tags/日常工作/">
-                  #日常工作
-                </a>
-              </span>
-            
-                    
-        </span>
-      </div>
-      
-        <div class="article-meta pull-right">
-          <span class="pc-view">
-            <i class="iconfont icon-view"></i>浏览: <span class="article-timer" data-identity="APP-DEBUG源码追踪"></span>
-          </span>
-        </div>
-      
-    </div>
-  </div>
-  
-  <div class="post">
-    <h1 class="article-title">
-      <a href="/2019/06/06/PHP生成国税局企业抬头二维码/">
-        <span>PHP生成国税局企业抬头二维码</span>
-      </a>
-    </h1>
-    <!-- PC端文章信息 -->
-    <div class="article-top-meta pc-view">
-      <span>
-        发布时间 : 2019-06-06
-      </span>
-    </div>
-    <!-- 移动端文章信息 -->
-    <div class="article-top-meta mobile-view">
-      <span>
-        发布 : 2019-06-06
-      </span>
-      
-        <span>
-        分类 :
-          <a href="/categories/PHP/">
-            PHP
-          </a>
-        </span>
-      
-      
-        <span>
-          浏览 : <span class="article-timer" data-identity="PHP生成国税局企业抬头二维码"></span>
-        </span>
-      
-    </div>
-    
-    <!-- 文章简介 -->
-    <div class="article-content">
-      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
-        
-      </div>
-    </div>
-    <div class="article-footer">
-      <div class="article-meta pull-left">
-        <!-- 分类pc端可见 -->
-        <span class="pc-view">
-          
-            <i class="iconfont icon-tag"></i>分类:
-            <a href="/categories/PHP/">
-              PHP
-            </a>
-          </span>
-          
-        <span>
-          
-            <i class="iconfont icon-06tags"></i>标签:
-            
-              <span class="span--tag">
-                <a href="/tags/php拓展/">
-                  #php拓展
-                </a>
-              </span>
-            
-                    
-        </span>
-      </div>
-      
-        <div class="article-meta pull-right">
-          <span class="pc-view">
-            <i class="iconfont icon-view"></i>浏览: <span class="article-timer" data-identity="PHP生成国税局企业抬头二维码"></span>
-          </span>
-        </div>
-      
-    </div>
-  </div>
-  
-  <div class="post">
-    <h1 class="article-title">
-      <a href="/2019/05/23/autoload-和spl-autoload-register-区别/">
-        <span>__autoload() 和 spl_autoload_register() 区别</span>
-      </a>
-    </h1>
-    <!-- PC端文章信息 -->
-    <div class="article-top-meta pc-view">
-      <span>
-        发布时间 : 2019-05-23
-      </span>
-    </div>
-    <!-- 移动端文章信息 -->
-    <div class="article-top-meta mobile-view">
-      <span>
-        发布 : 2019-05-23
-      </span>
-      
-        <span>
-        分类 :
-          <a href="/categories/PHP/">
-            PHP
-          </a>
-        </span>
-      
-      
-        <span>
-          浏览 : <span class="article-timer" data-identity="autoload-和spl-autoload-register-区别"></span>
-        </span>
-      
-    </div>
-    
-    <!-- 文章简介 -->
-    <div class="article-content">
-      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
-        
-      </div>
-    </div>
-    <div class="article-footer">
-      <div class="article-meta pull-left">
-        <!-- 分类pc端可见 -->
-        <span class="pc-view">
-          
-            <i class="iconfont icon-tag"></i>分类:
-            <a href="/categories/PHP/">
-              PHP
-            </a>
-          </span>
-          
-        <span>
-          
-            <i class="iconfont icon-06tags"></i>标签:
-            
-              <span class="span--tag">
-                <a href="/tags/函数/">
-                  #函数
-                </a>
-              </span>
-            
-                    
-        </span>
-      </div>
-      
-        <div class="article-meta pull-right">
-          <span class="pc-view">
-            <i class="iconfont icon-view"></i>浏览: <span class="article-timer" data-identity="autoload-和spl-autoload-register-区别"></span>
-          </span>
-        </div>
-      
-    </div>
-  </div>
-  
-  <div class="post">
-    <h1 class="article-title">
-      <a href="/2019/05/15/关于php的declare语句中tick的解释/">
-        <span>关于php的declare语句中的tick的解释</span>
-      </a>
-    </h1>
-    <!-- PC端文章信息 -->
-    <div class="article-top-meta pc-view">
-      <span>
-        发布时间 : 2019-05-15
-      </span>
-    </div>
-    <!-- 移动端文章信息 -->
-    <div class="article-top-meta mobile-view">
-      <span>
-        发布 : 2019-05-15
-      </span>
-      
-        <span>
-        分类 :
-          <a href="/categories/PHP/">
-            PHP
-          </a>
-        </span>
-      
-      
-        <span>
-          浏览 : <span class="article-timer" data-identity="关于php的declare语句中tick的解释"></span>
-        </span>
-      
-    </div>
-    
-    <!-- 文章简介 -->
-    <div class="article-content">
-      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
-        
-      </div>
-    </div>
-    <div class="article-footer">
-      <div class="article-meta pull-left">
-        <!-- 分类pc端可见 -->
-        <span class="pc-view">
-          
-            <i class="iconfont icon-tag"></i>分类:
-            <a href="/categories/PHP/">
-              PHP
-            </a>
-          </span>
-          
-        <span>
-          
-            <i class="iconfont icon-06tags"></i>标签:
-            
-              <span class="span--tag">
-                <a href="/tags/horizon/">
-                  #horizon
-                </a>
-              </span>
-            
-              <span class="span--tag">
-                <a href="/tags/pcntl/">
-                  #pcntl
-                </a>
-              </span>
-            
-              <span class="span--tag">
-                <a href="/tags/信号/">
-                  #信号
-                </a>
-              </span>
-            
-                    
-        </span>
-      </div>
-      
-        <div class="article-meta pull-right">
-          <span class="pc-view">
-            <i class="iconfont icon-view"></i>浏览: <span class="article-timer" data-identity="关于php的declare语句中tick的解释"></span>
-          </span>
-        </div>
-      
-    </div>
-  </div>
-  
-  <div class="post">
-    <h1 class="article-title">
-      <a href="/2019/05/07/MAC下LNMP环境启动、配置虚拟域名/">
-        <span>MAC下LNMP环境启动、配置虚拟域名</span>
-      </a>
-    </h1>
-    <!-- PC端文章信息 -->
-    <div class="article-top-meta pc-view">
-      <span>
-        发布时间 : 2019-05-07
-      </span>
-    </div>
-    <!-- 移动端文章信息 -->
-    <div class="article-top-meta mobile-view">
-      <span>
-        发布 : 2019-05-07
-      </span>
-      
-        <span>
-        分类 :
-          <a href="/categories/PHP/">
-            PHP
-          </a>
-        </span>
-      
-      
-        <span>
-          浏览 : <span class="article-timer" data-identity="MAC下LNMP环境启动、配置虚拟域名"></span>
-        </span>
-      
-    </div>
-    
-    <!-- 文章简介 -->
-    <div class="article-content">
-      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
-        
-      </div>
-    </div>
-    <div class="article-footer">
-      <div class="article-meta pull-left">
-        <!-- 分类pc端可见 -->
-        <span class="pc-view">
-          
-            <i class="iconfont icon-tag"></i>分类:
-            <a href="/categories/PHP/">
-              PHP
-            </a>
-          </span>
-          
-        <span>
-          
-            <i class="iconfont icon-06tags"></i>标签:
-            
-              <span class="span--tag">
-                <a href="/tags/php/">
-                  #php
-                </a>
-              </span>
-            
-              <span class="span--tag">
-                <a href="/tags/nginx/">
-                  #nginx
-                </a>
-              </span>
-            
-              <span class="span--tag">
-                <a href="/tags/日常工作/">
-                  #日常工作
-                </a>
-              </span>
-            
-                    
-        </span>
-      </div>
-      
-        <div class="article-meta pull-right">
-          <span class="pc-view">
-            <i class="iconfont icon-view"></i>浏览: <span class="article-timer" data-identity="MAC下LNMP环境启动、配置虚拟域名"></span>
-          </span>
-        </div>
-      
-    </div>
-  </div>
-  
-  <div class="post">
-    <h1 class="article-title">
-      <a href="/2019/04/09/Centos 服务器安装 Laravel Kafka/">
-        <span>Centos 服务器安装 Laravel Kafka</span>
-      </a>
-    </h1>
-    <!-- PC端文章信息 -->
-    <div class="article-top-meta pc-view">
-      <span>
-        发布时间 : 2019-04-09
-      </span>
-    </div>
-    <!-- 移动端文章信息 -->
-    <div class="article-top-meta mobile-view">
-      <span>
-        发布 : 2019-04-09
-      </span>
-      
-        <span>
-        分类 :
-          <a href="/categories/PHP/">
-            PHP
-          </a>
-        </span>
-      
-      
-        <span>
-          浏览 : <span class="article-timer" data-identity="Centos 服务器安装 Laravel Kafka"></span>
-        </span>
-      
-    </div>
-    
-    <!-- 文章简介 -->
-    <div class="article-content">
-      <div class="markdown-body article-content--inner" v-html="mdToHtml(psg.summary)">
-        
-      </div>
-    </div>
-    <div class="article-footer">
-      <div class="article-meta pull-left">
-        <!-- 分类pc端可见 -->
-        <span class="pc-view">
-          
-            <i class="iconfont icon-tag"></i>分类:
-            <a href="/categories/PHP/">
-              PHP
-            </a>
-          </span>
-          
-        <span>
-          
-            <i class="iconfont icon-06tags"></i>标签:
-            
-              <span class="span--tag">
-                <a href="/tags/php/">
-                  #php
-                </a>
-              </span>
-            
-              <span class="span--tag">
-                <a href="/tags/队列/">
-                  #队列
-                </a>
-              </span>
-            
-              <span class="span--tag">
-                <a href="/tags/服务器/">
-                  #服务器
-                </a>
-              </span>
-            
-                    
-        </span>
-      </div>
-      
-        <div class="article-meta pull-right">
-          <span class="pc-view">
-            <i class="iconfont icon-view"></i>浏览: <span class="article-timer" data-identity="Centos 服务器安装 Laravel Kafka"></span>
-          </span>
-        </div>
-      
-    </div>
-  </div>
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
   
 
-  <nav class="page-navigation">
+<div class="post">
+  <h1 class="article-title">
+    <span>Redis-Multi和pipeline的使用</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2019-12-10
+    </span>
     
-      <a href="/">上一页</a>
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="Redis-Multi和pipeline的使用"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h1 id="Redis-Multi和Redis-pipeline的使用"><a href="#Redis-Multi和Redis-pipeline的使用" class="headerlink" title="Redis-Multi和Redis-pipeline的使用"></a>Redis-Multi和Redis-pipeline的使用</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * name: 527</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Library</span>\<span class="title">Utils</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Redis</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lock</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> PRE = <span class="string">'lock_'</span>;</span><br><span class="line">    <span class="keyword">const</span> TASK_LOCA_INTO = <span class="string">'XXXXXX'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * redis mulit和pipeline 使用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> $ttl 过期时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> $result redis请求结果</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">($lock_id, $ttl = <span class="number">100</span>)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// redis 是单线程，意味着只能在一次请求结束并且返回结果后，第二次请求才会发起，类似于http的请求响应</span></span><br><span class="line">        <span class="comment">// 但是后来http引入长连接，发起一次请求不断开，可以多次数据交互，redis的mulit和http长连接一致</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// Redis::mulit()</span></span><br><span class="line">        <span class="comment">// Redis::mulit 先是开辟一条管道，执行中间的命令，然后Redis::exec() 做到一次发送多条请求，多条响应</span></span><br><span class="line">        <span class="comment">// 这段代码的意思是开辟一条连接，设置值+设置过期时间 ，关闭连接返回结果</span></span><br><span class="line">        <span class="comment">// Result[0]代表取第一条的结果</span></span><br><span class="line">        $key = Lock::PRE.$lock_id;</span><br><span class="line">        Redis::multi();</span><br><span class="line">        Redis::setNX($key, <span class="number">1</span>);</span><br><span class="line">        Redis::expire($key, $ttl);</span><br><span class="line">        $result=  Redis::exec();</span><br><span class="line">        <span class="keyword">return</span> $result[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Redis::pipeline()</span></span><br><span class="line">        <span class="comment">// redis通过这种方式，可以实现连续请求多条缓存，并且将多条请求结果统一返回至result中</span></span><br><span class="line">        <span class="comment">// 这段代码时将limit_gps_location中的多个数据循环，统一进行redis请求，然后将所有的请求结果返回至$result中</span></span><br><span class="line">        $result = Redis::pipeline(<span class="function"><span class="keyword">function</span> <span class="params">($pipe)</span> <span class="title">use</span> <span class="params">($limits_gps_location)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">foreach</span> ($limits_gps_location <span class="keyword">as</span> $value) &#123;</span><br><span class="line">                $key = <span class="keyword">self</span>::TASK_LOCA_INFO . $value;</span><br><span class="line">                $pipe-&gt;get($key);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : 527 <br>
+        
+        原文链接 : <a href="">https://www.im527.cn/2019/12/10/Redis-Multi和pipeline的使用/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share" style="margin-top: -2rem" data-wechat-qrcode-title="<p>微信扫一扫</p>" data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>" data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter">
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async></script>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>交钱再走</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫, 向我投食">
+        <p class="qrcode-meta">微信扫一扫, 向我投食</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫, 向我投食">
+        <p class="qrcode-meta">支付宝扫一扫, 向我投食</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2019/11/22/小兔数据wiki/" target="_self">小兔数据wiki</a>
+      </div>
     
     
   </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "Hyq9wkH495DgNHWhDQCOfQSp-gzGzoHsz",
+      appKey: "WaR7nrzhliHj9aVwdQzkdlGd",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
 
   
     <script defer>
@@ -730,7 +400,7 @@ const valineAPI = (() => {
 })()
 
 const calcAndWriteTimes = () => {
-  let isPost = false;
+  let isPost = true;
 
   let timerAllDOM = document.querySelectorAll(".article-timer");
 
@@ -785,6 +455,7 @@ if(true){
 }
 </script>
    
+
 </div>
 
 
